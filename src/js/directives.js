@@ -1,4 +1,4 @@
-/* global myApp, StellarSDK */
+/* global myApp, StellarSdk */
 
 myApp.directive('gateway', [ function() {
   return {
@@ -161,7 +161,7 @@ myApp.directive('masterKey', function() {
 
       var validator = function(value) {
         try{
-          StellarSDK.Keypair.fromSecret(value);
+          StellarSdk.Keypair.fromSecret(value);
         } catch(e) {
           ctrl.$setValidity('masterKey', false);
           return value;

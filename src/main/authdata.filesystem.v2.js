@@ -5,11 +5,11 @@ const {SIGNING_METHOD} = require('../common/constants')
 const fs = require('fs');
 const keystore = require('../main/keystore')
 const moment = require('moment');
-const StellarSDK = require('stellar-sdk');
+const StellarSdk = require('stellar-sdk');
 
 const validateContact = (c) => {
   if(c.address) {
-    if(!StellarSDK.StrKey.isValidEd25519PublicKey(c.address)) throw new Error('Not a valid address.');
+    if(!StellarSdk.StrKey.isValidEd25519PublicKey(c.address)) throw new Error('Not a valid address.');
   }
   if(c.federation) {
     if(typeof c.federation !== 'string') throw new Error('Invalid federation.');
@@ -24,13 +24,13 @@ const validateContact = (c) => {
   if(!moment(c.updated, 'YYYY-MM-DDTHH:mm:ssZZ', true).isValid()) throw new Error('Invalid created time.')
 
   switch(c.defaultMemoType) {
-    case(StellarSDK.MemoNone):
-    case(StellarSDK.MemoId):
-    case(StellarSDK.MemoText):
-    case(StellarSDK.MemoHash):
-    case(StellarSDK.MemoReturn): {
+    case(StellarSdk.MemoNone):
+    case(StellarSdk.MemoId):
+    case(StellarSdk.MemoText):
+    case(StellarSdk.MemoHash):
+    case(StellarSdk.MemoReturn): {
       try {
-        new StellarSDK.Memo(c.defaultMemoType, c.defaultMemoValue)
+        new StellarSdk.Memo(c.defaultMemoType, c.defaultMemoValue)
       } catch(e) {
         throw new Error(`Invalid Memo type and value combination. Got "${c.defaultMemoType}" and "${c.defaultMemoValue}".`)
       }
@@ -134,7 +134,7 @@ class AuthDataFilesystemBackendV2 {
       .filter((keypair)=>keypair.signingMethod === SIGNING_METHOD.ENCRYPTED_SECRET)
       .find((keypair)=>keypair.publicKey === publicKey);
     if(!keypair) throw new Error(`No keypair found with public key ${publicKey}`)
-    const kp = StellarSDK.Keypair.fromSecret(keypair.details)
+    const kp = StellarSdk.Keypair.fromSecret(keypair.details)
     return kp.signDecorated(teHash);
   }
 

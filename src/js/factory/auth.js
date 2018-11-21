@@ -1,4 +1,4 @@
-/* global angular, Buffer, CONST, myApp, StellarSDK, toContactV2 */
+/* global angular, Buffer, CONST, myApp, StellarSdk, toContactV2 */
 
 // Auth - singleton that manages account.
 myApp.factory('AuthenticationFactory', ['$rootScope', '$window', 'AuthData', 'AuthDataFilesystemRouter', 'AuthDataInmemory',
@@ -137,7 +137,7 @@ myApp.factory('AuthenticationFactory', ['$rootScope', '$window', 'AuthData', 'Au
         .filter(([address, account]) => {
           let totalWeight = 0;
           for(const [signer, weight] of Object.entries(account.availableSigners)) {
-            if(te.signatures.some((sig) => StellarSDK.Keypair.fromPublicKey(signer).verify(te.hash(), sig.signature()))) {
+            if(te.signatures.some((sig) => StellarSdk.Keypair.fromPublicKey(signer).verify(te.hash(), sig.signature()))) {
               totalWeight = totalWeight + weight;
             }
           }
@@ -159,16 +159,16 @@ myApp.factory('AuthenticationFactory', ['$rootScope', '$window', 'AuthData', 'Au
       // Note to myself - TL;DR operations of signatures.
       //     decoratedSignature           = keypair.signDecorated(transaction.hash())
       //     serializedDecoratedSignature = decoratedSignature.toXDR().toString('base64')
-      //     decoratedSignature           = StellarSDK.xdr.DecoratedSignature.fromXDR(Buffer.from(serializedDecoratedSignature, 'base64'))
-      //     isOk = StellarSDK.verify(transaction.hash(), decoratedSignature.signature(), keypair.rawPublicKey())
-      te = typeof te === 'object' ? te : new StellarSDK.Transaction(te);
+      //     decoratedSignature           = StellarSdk.xdr.DecoratedSignature.fromXDR(Buffer.from(serializedDecoratedSignature, 'base64'))
+      //     isOk = StellarSdk.verify(transaction.hash(), decoratedSignature.signature(), keypair.rawPublicKey())
+      te = typeof te === 'object' ? te : new StellarSdk.Transaction(te);
       if(signatureXDRs === undefined) signatureXDRs = []
       if(plainSecrets === undefined) plainSecrets = []
 
       const requiredSignatures = this.requiredSigners(te, thresholds)
       let mostUsefulSignature;
       for(const requiredPublicKey of requiredSignatures) {
-        const requiredKeypair = StellarSDK.Keypair.fromPublicKey(requiredPublicKey);
+        const requiredKeypair = StellarSdk.Keypair.fromPublicKey(requiredPublicKey);
 
         // If applicable, sign with stored secrets.
         const rightStoredSecretKp = _data.keypairs
@@ -182,8 +182,8 @@ myApp.factory('AuthenticationFactory', ['$rootScope', '$window', 'AuthData', 'Au
 
         // If applicable, sign with given signatures.
         for(const signatureXDR of signatureXDRs) {
-          const signature = StellarSDK.xdr.DecoratedSignature.fromXDR(Buffer.from(signatureXDR, 'base64'));
-          if(StellarSDK.verify(te.hash(), signature.signature(), requiredKeypair.rawPublicKey())) {
+          const signature = StellarSdk.xdr.DecoratedSignature.fromXDR(Buffer.from(signatureXDR, 'base64'));
+          if(StellarSdk.verify(te.hash(), signature.signature(), requiredKeypair.rawPublicKey())) {
             console.info(`Sign Transaction ${te.toEnvelope().toXDR().toString('base64')} with given signature of ${requiredPublicKey}`);
             mostUsefulSignature = signature;
             break;
@@ -192,7 +192,7 @@ myApp.factory('AuthenticationFactory', ['$rootScope', '$window', 'AuthData', 'Au
 
         // If applicable, sign with given plain secrets.
         const rightPlainSecretKp = plainSecrets
-          .map((plainSecret)=>StellarSDK.Keypair.fromSecret(plainSecret))
+          .map((plainSecret)=>StellarSdk.Keypair.fromSecret(plainSecret))
           .find((kp)=>kp.publicKey() === requiredPublicKey);
         if(rightPlainSecretKp) {
           console.info(`Sign Transaction ${te.toEnvelope().toXDR().toString('base64')} with given secret of ${requiredPublicKey}`);

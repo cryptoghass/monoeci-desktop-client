@@ -1,4 +1,4 @@
-/* global $, myApp, StellarSDK */
+/* global $, myApp, StellarSdk */
 
 myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'MonoeciApi',
                       function( $scope ,  $rootScope ,  MonoeciApi ) {
@@ -75,7 +75,7 @@ myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'MonoeciApi',
       issuer = issuer || $scope.manual_issuer;
       amount = amount || "100000000000";
       try{
-        new StellarSDK.Asset(code, issuer);
+        new StellarSdk.Asset(code, issuer);
       } catch(e) {
         $scope.trust_error = e.message;
         return;

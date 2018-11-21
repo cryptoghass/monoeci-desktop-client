@@ -1,4 +1,4 @@
-/* global myApp, StellarSDK */
+/* global myApp, StellarSdk */
 
 myApp.factory('MonoeciHistory', ['SettingFactory',
                         function( SettingFactory ) {
@@ -117,8 +117,8 @@ myApp.factory('MonoeciHistory', ['SettingFactory',
     },
 
     processTx(record, address) {
-      let tx = new StellarSDK.Transaction(record.envelope_xdr);
-      let resultXdr = StellarSDK.xdr.TransactionResult.fromXDR(record.result_xdr, 'base64');
+      let tx = new StellarSdk.Transaction(record.envelope_xdr);
+      let resultXdr = StellarSdk.xdr.TransactionResult.fromXDR(record.result_xdr, 'base64');
 
       let result = {
         date : new Date(record.created_at),

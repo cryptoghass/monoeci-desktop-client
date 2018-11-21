@@ -3,7 +3,7 @@
  * User blob storage for desktop client
  */
 
-/* global angular, CONST, myApp, require, StellarSDK, toContactV1, toContactV2 */
+/* global angular, CONST, myApp, require, StellarSdk, toContactV1, toContactV2 */
 
 // There's currently a code repetition between blobLocal and blobRemote..
 'use strict';
@@ -144,7 +144,7 @@ myApp.factory('AuthDataFilesystemV1', ['$window', 'AuthData', 'SettingFactory',
         network: SettingFactory.getCurrentNetwork().networkPassphrase,
         address: opts.address,
         keypairs: opts.secrets.map((secret)=>({
-          publicKey: StellarSDK.Keypair.fromSecret(secret).publicKey(),
+          publicKey: StellarSdk.Keypair.fromSecret(secret).publicKey(),
           signingMethod: CONST.SIGNING_METHOD.ENCRYPTED_SECRET,
           details: secret,
         })),
@@ -242,7 +242,7 @@ myApp.factory('AuthDataFilesystemV1', ['$window', 'AuthData', 'SettingFactory',
         .filter((keypair)=>keypair.signingMethod === CONST.SIGNING_METHOD.ENCRYPTED_SECRET)
         .find((keypair)=>keypair.publicKey === publicKey);
       if(!keypair) throw new Error(`No keypair found with public key ${publicKey}`)
-      const kp = StellarSDK.Keypair.fromSecret(keypair.details)
+      const kp = StellarSdk.Keypair.fromSecret(keypair.details)
       return kp.signDecorated(teHash);
     }
 
@@ -286,12 +286,12 @@ myApp.factory('AuthDataFilesystemV1', ['$window', 'AuthData', 'SettingFactory',
       const authDataFileSystemV1 = new AuthDataFilesystemV1({
         address: decrypted.account_id,
         keypairs: decrypted.masterkeys.map((secret)=>({
-          publicKey: StellarSDK.Keypair.fromSecret(secret).publicKey(),
+          publicKey: StellarSdk.Keypair.fromSecret(secret).publicKey(),
           signingMethod: CONST.SIGNING_METHOD.ENCRYPTED_SECRET,
           details: secret,
         })),
         contacts: decrypted.contacts,
-        network: StellarSDK.Networks.PUBLIC,  // Implied default.
+        network: StellarSdk.Networks.PUBLIC,  // Implied default.
         created: decrypted.created,
         updated: decrypted.created,  // There's no such value in V1, so make it up.
         password,

@@ -1,4 +1,4 @@
-/* global myApp, StellarSDK */
+/* global myApp, StellarSdk */
 
 myApp.factory('SettingFactory', function($window) {
   return {
@@ -350,7 +350,7 @@ myApp.factory('AnchorFactory', ['$rootScope', 'MonoeciApi',
 
       console.debug('Parse monoeci.toml of ' + domain);
       self.anchor[domain].parsing = true;
-      StellarSDK.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+      StellarSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
         console.debug(domain, monoeciToml);
         self.anchor[domain].parsing = false;
         self.anchor[domain].parsed = true;
