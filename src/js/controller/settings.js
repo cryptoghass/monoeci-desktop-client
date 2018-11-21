@@ -1,7 +1,7 @@
 /* global myApp */
 
-myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'StellarApi',
-                         function( $scope ,  $rootScope ,  SettingFactory ,  StellarApi ) {
+myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'MonoeciApi',
+                         function( $scope ,  $rootScope ,  SettingFactory ,  MonoeciApi ) {
     $scope.mode = 'federation';
     $scope.isMode = function(mode) {
       return $scope.mode === mode;
@@ -13,11 +13,11 @@ myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Ste
     $scope.proxy = SettingFactory.getProxy();
 
     $scope.active_network = SettingFactory.getNetworkType();
-    $scope.active_horizon = SettingFactory.getStellarUrl();
+    $scope.active_horizon = SettingFactory.getMonoeciUrl();
     $scope.active_passphrase = SettingFactory.getNetPassphrase();
     $scope.active_coin = SettingFactory.getCoin();
     $scope.network_type = SettingFactory.getNetworkType();
-    $scope.network_horizon = SettingFactory.getStellarUrl();
+    $scope.network_horizon = SettingFactory.getMonoeciUrl();
     $scope.network_passphrase = SettingFactory.getNetPassphrase();
     $scope.network_coin = SettingFactory.getCoin();
     $scope.all_networks = SettingFactory.NETWORKS;
@@ -27,7 +27,7 @@ myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Ste
     $scope.fed_bitcoin = SettingFactory.getFedBitcoin();
     $scope.set = function(type) {
       $scope.network_type = type;
-      $scope.network_horizon = SettingFactory.getStellarUrl(type);
+      $scope.network_horizon = SettingFactory.getMonoeciUrl(type);
       $scope.network = SettingFactory.NETWORKS[type];
       if(type === 'other') {
         $scope.network_passphrase = SettingFactory.getNetPassphrase(type);
@@ -43,17 +43,17 @@ myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Ste
             $scope.active_coin !== $scope.network_coin) {
           try {
             SettingFactory.setNetworkType($scope.network_type);
-            SettingFactory.setStellarUrl($scope.network_horizon);
+            SettingFactory.setMonoeciUrl($scope.network_horizon);
             SettingFactory.setNetPassphrase($scope.network_passphrase);
             SettingFactory.setCoin($scope.network_coin);
 
             $scope.active_network = SettingFactory.getNetworkType()
-            $scope.active_horizon = SettingFactory.getStellarUrl()
+            $scope.active_horizon = SettingFactory.getMonoeciUrl()
             $scope.active_passphrase = SettingFactory.getNetPassphrase()
             $scope.active_coin = SettingFactory.getCoin()
 
-            StellarApi.setServer($scope.active_horizon, $scope.active_passphrase, SettingFactory.getAllowHttp());
-            StellarApi.logout();
+            MonoeciApi.setServer($scope.active_horizon, $scope.active_passphrase, SettingFactory.getAllowHttp());
+            MonoeciApi.logout();
             $rootScope.reset();
             $rootScope.$broadcast('$authUpdate');  // workaround to refresh and get changes into effect.
             setTimeout(function(){
@@ -80,7 +80,7 @@ myApp.controller("SettingsCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Ste
 
     $scope.fed_name = "";
     $scope.resolveFed = function() {
-      StellarApi.getFedName($scope.fed_network, $rootScope.address, function(err, name){
+      MonoeciApi.getFedName($scope.fed_network, $rootScope.address, function(err, name){
         if (err) {
           console.error(err);
         } else {

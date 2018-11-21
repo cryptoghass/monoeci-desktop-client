@@ -4,7 +4,7 @@ module.exports = (()=>{
 
   const { default: Transport } = require("@ledgerhq/hw-transport-node-hid");
   const { default: Str } = require("@ledgerhq/hw-app-str");
-  const { Keypair, xdr } = require("stellar-sdk");
+  const { Keypair, xdr } = require("monoeci-sdk");
   const BigNumber = require('bignumber.js')
   const {sha256} = require("sha.js");
 
@@ -28,7 +28,7 @@ module.exports = (()=>{
 
 
   /**
-   * HardwareWalletLedger provides high-level API for Ledger device with Stellar app.
+   * HardwareWalletLedger provides high-level API for Ledger device with Monoeci app.
    *
    * As it turns out Ledger behaviour is "pretty random" that depends on timing of interactions and computer's OS.
    * Furthermore it lacks full introspection about which state it is in and whenever it's available for signing.
@@ -157,11 +157,11 @@ module.exports = (()=>{
 
       } catch(err) {
 
-        // After PIN, outside Stellar app, if calling `this.str.getAppConfiguration`
+        // After PIN, outside Monoeci app, if calling `this.str.getAppConfiguration`
         if(err.statusCode === 27904 && err.statusText === 'INS_NOT_SUPPORTED') {
           newState = HWW_STATE.ONLINE;
 
-        // After PIN, outside Stellar app, if calling `this.str.getPublicKey`.
+        // After PIN, outside Monoeci app, if calling `this.str.getPublicKey`.
         } else if(err.statusCode === 26368 && err.statusText === 'INCORRECT_LENGTH') {
           newState = HWW_STATE.ONLINE;
 

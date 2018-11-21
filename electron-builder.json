@@ -1,7 +1,7 @@
 {
-  "productName": "Foxlet",
-  "artifactName": "foxlet-${version}.${ext}",
-  "appId": "com.ripplefox.foxlet",
+  "productName": "Monoeci Desktop Wallet",
+  "artifactName": "monoeci-${version}.${ext}",
+  "appId": "com.monoeci.wallet",
   "npmRebuild": true,
   "npmArgs": "--help",
   "buildDependenciesFromSource": true,

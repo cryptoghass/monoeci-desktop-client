@@ -50,7 +50,7 @@ const toV3 = function (plaintext, password, opts, progressCallback) {
 
   return {
     version: 3,
-    contentType: 'stellar',
+    contentType: 'monoeci',
     contentVersion: 2,
     id: uuidv4({ random: opts.uuid || crypto.randomBytes(16) }),
     crypto: {

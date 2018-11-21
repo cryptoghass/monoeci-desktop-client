@@ -1,6 +1,6 @@
 /* global myApp */
-myApp.controller('proxyModalCtrl', ['$rootScope', '$scope', 'SettingFactory', 'StellarApi',
-                             function( $rootScope ,  $scope ,  SettingFactory ,  StellarApi ) {
+myApp.controller('proxyModalCtrl', ['$rootScope', '$scope', 'SettingFactory', 'MonoeciApi',
+                             function( $rootScope ,  $scope ,  SettingFactory ,  MonoeciApi ) {
 
 
   $scope.proxy = SettingFactory.getProxy();

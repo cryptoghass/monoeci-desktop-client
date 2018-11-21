@@ -1,14 +1,14 @@
-/* global $, myApp, StellarSdk, ripple */
+/* global $, myApp, MonoeciSdk, ripple */
 
-myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarApi', 'SettingFactory', 'AuthenticationFactory', '$http',
-                     function( $scope ,  $rootScope ,  $routeParams ,  StellarApi ,  SettingFactory ,  AuthenticationFactory ,  $http ) {
+myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'MonoeciApi', 'SettingFactory', 'AuthenticationFactory', '$http',
+                     function( $scope ,  $rootScope ,  $routeParams ,  MonoeciApi ,  SettingFactory ,  AuthenticationFactory ,  $http ) {
     console.log('Send to', $routeParams);
 
-    $scope.MemoNone = StellarSdk.MemoNone;
-    $scope.MemoID = StellarSdk.MemoID;
-    $scope.MemoText = StellarSdk.MemoText;
-    $scope.MemoHash = StellarSdk.MemoHash;
-    $scope.MemoReturn = StellarSdk.MemoReturn;  // effectively equals MemoHash, thus skipped.
+    $scope.MemoNone = MonoeciSdk.MemoNone;
+    $scope.MemoID = MonoeciSdk.MemoID;
+    $scope.MemoText = MonoeciSdk.MemoText;
+    $scope.MemoHash = MonoeciSdk.MemoHash;
+    $scope.MemoReturn = MonoeciSdk.MemoReturn;  // effectively equals MemoHash, thus skipped.
 
     $scope.asset = {};
     $scope.input_address;
@@ -51,7 +51,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
     };
     $scope.isValidMemo = function() {
       if ($scope.memo) {
-        $scope.send_error.memo = StellarApi.isValidMemo($scope.memo_type, $scope.memo);
+        $scope.send_error.memo = MonoeciApi.isValidMemo($scope.memo_type, $scope.memo);
       } else {
         $scope.send_error.memo = '';
       }
@@ -127,7 +127,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
         $scope.is_federation = false;
         $scope.memo_provided = false;
         $scope.real_address = $scope.full_address;
-        $scope.send_error.invalid = !StellarApi.isValidAddress(snapshot);
+        $scope.send_error.invalid = !MonoeciApi.isValidAddress(snapshot);
         if (!$scope.send_error.invalid && special_destinations[$scope.real_address]) {
           $scope.memo_type = special_destinations[$scope.real_address].memo_type;
           $scope.memo_require = true;
@@ -148,9 +148,9 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
       $scope.target_domain = domain;
       $scope.act_loading = true;
 
-      StellarSdk.StellarTomlResolver.resolve(domain).then(function(stellarToml) {
-        $scope.fed_url = stellarToml.FEDERATION_SERVER;
-        var server = new StellarSdk.FederationServer(stellarToml.FEDERATION_SERVER, domain, {});
+      MonoeciSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+        $scope.fed_url = monoeciToml.FEDERATION_SERVER;
+        var server = new MonoeciSdk.FederationServer(monoeciToml.FEDERATION_SERVER, domain, {});
         server.resolveAddress(prestr).then(function(data){
           console.debug(prestr, data);
           $scope.act_loading = false;
@@ -277,11 +277,11 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
     };
 
     $scope.resolveAccountInfo = function() {
-      if (!$scope.real_address || !StellarApi.isValidAddress($scope.real_address)) {
+      if (!$scope.real_address || !MonoeciApi.isValidAddress($scope.real_address)) {
         return;
       }
       console.debug('resolve ' + $scope.real_address);
-      StellarApi.getInfo($scope.real_address, function(err, data) {
+      MonoeciApi.getInfo($scope.real_address, function(err, data) {
         if (err) {
           if (err.message == "NotFoundError") {
             $scope.real_not_fund = true;
@@ -341,7 +341,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
 
       try {
         // 2. Get Te
-        const te = await StellarApi.send($scope.real_address, $scope.asset.code, $scope.asset.issuer,
+        const te = await MonoeciApi.send($scope.real_address, $scope.asset.code, $scope.asset.issuer,
           $scope.asset.amount, $scope.memo_type, $scope.memo)
 
         // 3. Pass te to signModal, wait for response and then close it.
@@ -355,7 +355,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
           });
 
         // 4. Submit teSigned
-        await StellarApi.submitTransaction(teSigned);
+        await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Handle success.
         $scope.service_amount = 0;
@@ -364,7 +364,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'StellarAp
       } catch(err) {
         // 5b. Handle error.
         console.error(err)
-        $scope.send_error.message = StellarApi.getErrMsg(err);
+        $scope.send_error.message = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.sending = false;

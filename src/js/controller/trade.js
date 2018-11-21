@@ -1,7 +1,7 @@
-/* global _, myApp, round, StellarSdk */
+/* global _, myApp, round, MonoeciSdk */
 
-myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFactory',
-                      function( $scope ,  $rootScope ,  StellarApi ,  SettingFactory ) {
+myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFactory',
+                      function( $scope ,  $rootScope ,  MonoeciApi ,  SettingFactory ) {
     $scope.offers = {
       origin : null,
       ask : {},
@@ -166,7 +166,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
       var base = {code: $scope.base_code, issuer: $scope.base_issuer};
       var counter = {code: $scope.counter_code, issuer: $scope.counter_issuer};
       $scope.refreshingBook = true;
-      StellarApi.queryBook(base, counter, function(err, data) {
+      MonoeciApi.queryBook(base, counter, function(err, data) {
         if (!err) {
           console.debug(!$scope.book.origin || !_.isEqual($scope.book.origin.asks, data.asks) || !_.isEqual($scope.book.origin.bids, data.bids) ? 'book changed': 'book unchange');
           if(!$scope.book.origin || !_.isEqual($scope.book.origin.asks, data.asks) || !_.isEqual($scope.book.origin.bids, data.bids)) {
@@ -184,8 +184,8 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
       var base = {code: $scope.base_code, issuer: $scope.base_issuer};
       var counter = {code: $scope.counter_code, issuer: $scope.counter_issuer};
 
-      StellarApi.closeOrderbook();
-      StellarApi.listenOrderbook(base, counter, function(res) {
+      MonoeciApi.closeOrderbook();
+      MonoeciApi.listenOrderbook(base, counter, function(res) {
         if(!_.isEqual($scope.book.stream, res)) {
           $scope.book.streamUpdate(res);
           console.warn('book stream', res);
@@ -198,7 +198,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
     $scope.refreshingOffer = false;
     $scope.refreshOffer = function() {
       $scope.refreshingOffer = true;
-      StellarApi.queryOffer(function(err, offers){
+      MonoeciApi.queryOffer(function(err, offers){
         if (!err) {
           $scope.offers.update(offers);
           console.log($scope.offers);
@@ -271,10 +271,10 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
         option.amount = $scope.sell_amount;
         option.price  = $scope.sell_price;
       }
-      StellarApi.offer(option, function(err, result) {
+      MonoeciApi.offer(option, function(err, result) {
         $scope[type + 'ing'] = false;
         if (err) {
-          $scope[type + '_fail'] = StellarApi.getErrMsg(err);
+          $scope[type + '_fail'] = MonoeciApi.getErrMsg(err);
         } else {
           $scope[type + '_ok'] = true;
           $scope[type + '_result'] = result;
@@ -312,9 +312,9 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
       }
       $scope.cancel_error = "";
       $scope.cancel_result = null;
-      StellarApi.cancel(offer, function(err, result){
+      MonoeciApi.cancel(offer, function(err, result){
         if (err) {
-          $scope.cancel_error = StellarApi.getErrMsg(err);
+          $scope.cancel_error = MonoeciApi.getErrMsg(err);
         } else {
           $scope.cancel_result = result;
         }
@@ -377,7 +377,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
         issuer = code.issuer;
         code = code.code;
       }
-      return code == $rootScope.currentNetwork.coin.code ? new StellarSdk.Asset.native() : new StellarSdk.Asset(code, issuer);
+      return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
     }
 
     function validPair(code, issuer) {
@@ -385,7 +385,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFac
         return true;
       }
       try {
-        new StellarSdk.Asset(code, issuer);
+        new MonoeciSdk.Asset(code, issuer);
         return true;
       } catch(e) {
         return false;

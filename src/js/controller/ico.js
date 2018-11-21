@@ -1,7 +1,7 @@
 /* global myApp */
 
-myApp.controller("IcoCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFactory', 'RemoteFactory',
-                    function( $scope ,  $rootScope ,  StellarApi ,  SettingFactory ,  RemoteFactory ) {
+myApp.controller("IcoCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFactory', 'RemoteFactory',
+                    function( $scope ,  $rootScope ,  MonoeciApi ,  SettingFactory ,  RemoteFactory ) {
     //console.log('IcoCtrl', $routeParams.type);
 
     if ($rootScope.ico_data) {
@@ -62,10 +62,10 @@ myApp.controller("IcoCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFacto
       issuer = issuer || $scope.manual_issuer;
       $scope.setChanging(code, issuer, true);
       $scope.trust_error = "";
-      StellarApi.changeTrust(code, issuer, "100000000000", function(err, data){
+      MonoeciApi.changeTrust(code, issuer, "100000000000", function(err, data){
         $scope.setChanging(code, issuer, false);
         if (err) {
-          $scope.trust_error = StellarApi.getErrMsg(err);
+          $scope.trust_error = MonoeciApi.getErrMsg(err);
         }
         $rootScope.$apply();
       });
@@ -75,10 +75,10 @@ myApp.controller("IcoCtrl", ['$scope', '$rootScope', 'StellarApi', 'SettingFacto
       issuer = issuer || $scope.manual_issuer;
       $scope.setChanging(code, issuer, true);
       $scope.trust_error = "";
-      StellarApi.changeTrust(code, issuer, "0", function(err, data){
+      MonoeciApi.changeTrust(code, issuer, "0", function(err, data){
         $scope.setChanging(code, issuer, false);
         if (err) {
-          $scope.trust_error = StellarApi.getErrMsg(err);
+          $scope.trust_error = MonoeciApi.getErrMsg(err);
         }
         $rootScope.$apply();
       });

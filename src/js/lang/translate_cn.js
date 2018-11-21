@@ -29,7 +29,7 @@ var translate_cn = {
   security_notice : '下方的秘钥让你可以在丢失密码的小概率事件中拿回你的钱。任何拥有该秘钥的人都可以取出你的钱。所以务必将它保管在安全的地方。',
   show_password : '显示',
   hide_password : '隐藏',
-  stellar_address : '恒星地址',
+  monoeci_address : '恒星地址',
   secret_key : '秘钥和二维码:',
   show_secret: '显示秘钥',
   hide_secret: '隐藏秘钥',
@@ -172,7 +172,7 @@ var translate_cn = {
 
   /** ICO **/
   ico : '衍生项目',
-  ico_stellar : '恒星的衍生项目',
+  ico_monoeci : '恒星的衍生项目',
   ico_note: '警告：在参与项目之前，你需要仔细考虑项目所涉及的风险。你的资金可能完全损失。项目来自源于社区，我们不为任何项目背书。',
   ico_instruction: '授信衍生项目的资产后，选择“交易 - 兑换”，即可用你所拥有的资产参与。',
 
@@ -186,8 +186,8 @@ var translate_cn = {
   public_net : '公共网络',
   test_net   : '测试网络',
   other_net  : '自定义',
-  'Stellar Public Network' : '公共网络',
-  'Stellar Test Network' : '测试网络',
+  'Monoeci Public Network' : '公共网络',
+  'Monoeci Test Network' : '测试网络',
   'User defined' : '自定义',
   public_url : '恒星公网节点',
   test_url   : '测试网络节点',
@@ -249,8 +249,8 @@ var translate_cn = {
   will_recv : '对方将收到',
   can_send  : '你可以发送',
 
-  Stellar : '恒星',
-  stellar_desktop_client : '恒星桌面钱包',
+  Monoeci : '恒星',
+  monoeci_desktop_client : '恒星桌面钱包',
   app_open_source  : '钱包开源。',
   app_safe_notice  : '密钥保存在本地，丢失不可恢复！一定要备份，安全自己负责。',
   app_feedback     : '有建议可到社区QQ群676552869里讨论。',
@@ -260,9 +260,9 @@ var translate_cn = {
   logout : '注销',
   new_version_available: '发现新版本',
 
-  /** StellarGuard **/
-  stellarguard_submitted: '交易已经提交至StellarGuard，正在等待授权。',
-  stellarguard_authorize: '授权交易',
+  /** MonoeciGuard **/
+  monoeciguard_submitted: '交易已经提交至MonoeciGuard，正在等待授权。',
+  monoeciguard_authorize: '授权交易',
 
   /** Error **/
   NotFoundError : '恒星网络未找到该账号，请先激活此账号。激活需要至少1 {{code}}。每个授信和委托单需要额外冻结0.5 {{code}}，建议至少用3 {{code}}完成激活。',

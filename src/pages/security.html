@@ -17,7 +17,7 @@
 			 store it somewhere PRIVATE AND SAFE.
 		  </p>
 		  <div class="address">
-			<label translate="account_address">Stellar address</label>
+			<label translate="account_address">Monoeci address</label>
 			<p class="key">{{address}}</p>
 			<p class="key"><qrcode data="{{address}}" size=200></qrcode></p>
 		  </div>
@@ -56,10 +56,10 @@
 			<div class="s-alert s-alert--alert row__message" ng-show="inflation_error">
 				{{inflation_error}}
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-if="inflation_done && inflation_result.stellarGuard">
-				<stellarguard-result result="inflation_result"></stellarguard-result>
+			<div class="s-alert s-alert--success row__message" ng-if="inflation_done && inflation_result.monoeciGuard">
+				<monoeciguard-result result="inflation_result"></monoeciguard-result>
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-show="inflation_done && !inflation_result.stellarGuard" translate="inflation_done">
+			<div class="s-alert s-alert--success row__message" ng-show="inflation_done && !inflation_result.monoeciGuard" translate="inflation_done">
 				Inflation Destination was set.
 			</div>
 			<div class="row" style="margin-bottom: 20px;">
@@ -108,10 +108,10 @@
 			<div class="s-alert s-alert--alert row__message" ng-show="domain_error">
 				{{domain_error}}
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-if="domain_done && domain_result.stellarGuard">
-				<stellarguard-result result="domain_result"></stellarguard-result>
+			<div class="s-alert s-alert--success row__message" ng-if="domain_done && domain_result.monoeciGuard">
+				<monoeciguard-result result="domain_result"></monoeciguard-result>
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-show="domain_done && !domain_result.stellarGuard" translate="domain_done">
+			<div class="s-alert s-alert--success row__message" ng-show="domain_done && !domain_result.monoeciGuard" translate="domain_done">
 				Home Domain was set.
 			</div>
 			<div class="row" style="margin-bottom: 20px;">
@@ -124,7 +124,7 @@
 		<div class="col-sm-9" ng-show="isMode('data')">
 			<label translate="important">Important:</label>
 			<p class="hint" translate="data_desc1" translate-values="currentNetwork.coin">Allows you to set,modify or delete a Data Entry (name/value pair) that is attached to a particular account. An account can have an arbitrary amount of DataEntries attached to it. Each DataEntry increases the minimum balance needed to be held by the account.</p>
-			<p class="hint" translate="data_desc2">DataEntries can be used for application specific things. They are not used by the core Stellar protocol.</p>
+			<p class="hint" translate="data_desc2">DataEntries can be used for application specific things. They are not used by the core Monoeci protocol.</p>
 			<div class="row" style="margin-bottom: 20px;">
 				<div class="col-xs-6 col-md-5">
 					<label translate="data_key">Name</label>
@@ -138,10 +138,10 @@
 			<div class="s-alert s-alert--alert row__message" ng-show="data_error">
 				{{data_error}}
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-if="data_done && data_result.stellarGuard">
-				<stellarguard-result result="domain_result"></stellarguard-result>
+			<div class="s-alert s-alert--success row__message" ng-if="data_done && data_result.monoeciGuard">
+				<monoeciguard-result result="domain_result"></monoeciguard-result>
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-show="data_done && !data_result.stellarGuard" translate="data_done">
+			<div class="s-alert s-alert--success row__message" ng-show="data_done && !data_result.monoeciGuard" translate="data_done">
 				Data entry was set.
 			</div>
 			<div class="row" style="margin-bottom: 20px;">
@@ -174,10 +174,10 @@
 			<div class="s-alert s-alert--alert row__message" ng-show="merge_error">
 				{{merge_error}}
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-if="merge_done && merge_result.stellarGuard">
-				<stellarguard-result result="merge_result"></stellarguard-result>
+			<div class="s-alert s-alert--success row__message" ng-if="merge_done && merge_result.monoeciGuard">
+				<monoeciguard-result result="merge_result"></monoeciguard-result>
 			</div>
-			<div class="s-alert s-alert--success row__message" ng-show="merge_done && !merge_result.stellarGuard" translate="merge_done">
+			<div class="s-alert s-alert--success row__message" ng-show="merge_done && !merge_result.monoeciGuard" translate="merge_done">
 				Your account was merged to destination.
 			</div>
 			<div class="row" style="margin-bottom: 20px;" ng-show="delete_warning">

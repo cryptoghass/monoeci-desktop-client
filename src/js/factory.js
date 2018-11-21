@@ -1,89 +1,45 @@
-/* global myApp, StellarSdk */
+/* global myApp, MonoeciSdk */
 
 myApp.factory('SettingFactory', function($window) {
   return {
     // To add new preset network, add new entry here and in `translationKey` to all translations.
     // P.S. Undefined entries will be asked for in user interface.
     NETWORKS: {
-      xlm: {
-        name: "Stellar Public Network",
+      xmcc: {
+        name: "Monoeci Public Network",
         translationKey: 'public_url',
-        networkType: 'xlm',
-        networkPassphrase: StellarSdk.Networks.PUBLIC,
+        networkType: 'xmcc',
+        networkPassphrase: "Monoeci Main Network ; Novembre 2018",
         knownHorizons: [
-          'https://horizon.stellar.org',  // First one is default.
-          'https://stellar-api.wancloud.io',
-          'https://api.chinastellar.com',
+          'https://api.monoeci.io/'  // First one is default.
         ],
         coin: {
-          name: "lumen",
+          name: "monoeci",
           atom: "stroop",
-          code: "XLM",
-          logo: "img/rocket.png",
+          code: "XMCC",
+          logo: "img/monoeci.png",
           bip44: 148,
         },
         allowHTTP: false,
         tabs: ["history", "trade", "balance", "send", "trust", "service", "ico", "signoffline"]
       },
-      xlmTest: {
-        name: "Stellar Test Network",
+      xmccTest: {
+        name: "Monoeci Test Network",
         translationKey: 'test_url',
-        networkType: 'xlmTest',
-        networkPassphrase: StellarSdk.Networks.TESTNET,
+        networkType: 'xmccTest',
+        networkPassphrase: "Monoeci Test Network ; Novembre 2018",
         knownHorizons: [
-          'https://horizon-testnet.stellar.org',
+          'https://api-testnet.monoeci.io/',
         ],
         coin: {
-          name: "lumen",
+          name: "monoeci",
           atom: "stroop",
           code: "XLM",
-          logo: "img/rocket.png",
+          logo: "img/monoeci.png",
           bip44: 148,
         },
         allowHTTP: true,
         tabs: ["history", "trade", "balance", "send", "trust", "signoffline"]
-      },
-      fic: {
-        name: "FIC Network",
-        translationKey: 'fict_net',
-        networkType: 'fic',
-        networkPassphrase: 'FIC Network ; 2018',
-        knownHorizons: [
-          'https://ficnetwork-apm.factury.co',
-          'https://ficnetwork-aps.factury.co',
-          'https://ficnetwork-apt.factury.co',
-          'https://ficnetwork-eua.factury.co',
-          'https://ficnetwork-euf.factury.co',
-          'https://ficnetwork-eul.factury.co',
-          'https://ficnetwork-nat.factury.co',
-          'https://ficnetwork-usa.factury.co',
-          'https://ficnetwork-ust.factury.co',
-        ],
-        coin: {
-          name: "FIC Network",
-          code: "FIC",
-          logo: "img/fic.png",
-          bip44: 5248,
-        },
-        allowHTTP: false,
-        tabs: ["history", "balance", "send", "ficnetwork", "signoffline"]
-      },
-      ficTest: {
-        name: "FIC Test Network",
-        translationKey: 'fictest_net',
-        networkType: 'ficTest',
-        networkPassphrase: 'FIC Test Network ; 2017',
-        knownHorizons: [
-          'https://ficnetwork-testnet1.factury.co',
-        ],
-        coin: {
-          name: "FIC Network",
-          code: "FIC",
-          logo: "img/fic.png",
-          bip44: 5248,
-        },
-        allowHTTP: true,
-        tabs: ["history", "balance", "send", "ficnetwork", "signoffline"]
       },
       other: {
         name: "User defined",
@@ -140,10 +96,10 @@ myApp.factory('SettingFactory', function($window) {
       }
       return network;
     },
-    setStellarUrl : function(url) {
+    setMonoeciUrl : function(url) {
       return $window.localStorage[`network_horizon/${this.getNetworkType()}`] = url;
     },
-    getStellarUrl : function(type) {
+    getMonoeciUrl : function(type) {
       type = type || this.getNetworkType();
       return $window.localStorage[`network_horizon/${type}`] || this.NETWORKS[type].knownHorizons[0];
     },
@@ -213,7 +169,7 @@ myApp.factory('SettingFactory', function($window) {
   };
 });
 
-myApp.factory('FedNameFactory', function(SettingFactory, StellarApi) {
+myApp.factory('FedNameFactory', function(SettingFactory, MonoeciApi) {
   var fed = {
     map : {}
   };
@@ -238,7 +194,7 @@ myApp.factory('FedNameFactory', function(SettingFactory, StellarApi) {
       return callback(new Error("resolving " + address), null);
     }
 
-    StellarApi.getFedName(SettingFactory.getFedNetwork(), address, function(err, name){
+    MonoeciApi.getFedName(SettingFactory.getFedNetwork(), address, function(err, name){
       if (err) {
         console.error(address, err);
       } else {
@@ -272,8 +228,8 @@ myApp.factory('RemoteFactory', function($http) {
 
   // Poor network in China, need a backup data source
   remote.getIcoAnchors = function(callback) {
-    var url = 'https://stellarchat.github.io/ico/data/anchor.json';
-    var backup = 'https://ico.stellar.chat/data/anchor.json';
+    var url = 'https://monoecichat.github.io/ico/data/anchor.json';
+    var backup = 'https://ico.monoeci.chat/data/anchor.json';
 
     getResource(url, function(err, data) {
       if (err) {
@@ -288,8 +244,8 @@ myApp.factory('RemoteFactory', function($http) {
   };
 
   remote.getIcoItems = function(callback) {
-    var url = 'https://stellarchat.github.io/ico/data/ico.json';
-    var backup = 'https://ico.stellar.chat/data/ico.json';
+    var url = 'https://monoecichat.github.io/ico/data/ico.json';
+    var backup = 'https://ico.monoeci.chat/data/ico.json';
 
     getResource(url, function(err, data) {
       if (err) {
@@ -303,21 +259,21 @@ myApp.factory('RemoteFactory', function($http) {
     });
   };
 
-  remote.getStellarTicker = function(callback) {
-    //var url = 'http://ticker.stellar.org/';
-    var url = 'https://api.stellarterm.com/v1/ticker.json';
+  remote.getMonoeciTicker = function(callback) {
+    //var url = 'http://ticker.monoeci.org/';
+    var url = 'https://api.monoeciterm.com/v1/ticker.json';
     getResource(url, callback);
   }
 
   remote.getClientVersion = function(callback) {
-    var url = "https://raw.githubusercontent.com/stellarchat/desktop-client/master/src/package.json";
+    var url = "https://raw.githubusercontent.com/monoeci-monaco/monoeci-desktop-client/master/src/package.json";
     getResource(url, callback);
   }
   return remote;
 });
 
-myApp.factory('AnchorFactory', ['$rootScope', 'StellarApi',
-  function($scope, StellarApi) {
+myApp.factory('AnchorFactory', ['$rootScope', 'MonoeciApi',
+  function($scope, MonoeciApi) {
     var obj = {
       anchor : {
         'ripplefox.com' : {domain  : 'ripplefox.com', parsing : false, parsed  : false}
@@ -369,7 +325,7 @@ myApp.factory('AnchorFactory', ['$rootScope', 'StellarApi',
 
       console.debug('Parse domain of ' + address);
       self.address[address].parsing = true;
-      StellarApi.getInfo(address, function(err, data) {
+      MonoeciApi.getInfo(address, function(err, data) {
         self.address[address].parsing = false;
         if (err) {
           console.error(err);
@@ -392,17 +348,17 @@ myApp.factory('AnchorFactory', ['$rootScope', 'StellarApi',
         return;
       }
 
-      console.debug('Parse stellar.toml of ' + domain);
+      console.debug('Parse monoeci.toml of ' + domain);
       self.anchor[domain].parsing = true;
-      StellarSdk.StellarTomlResolver.resolve(domain).then(function(stellarToml) {
-        console.debug(domain, stellarToml);
+      MonoeciSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+        console.debug(domain, monoeciToml);
         self.anchor[domain].parsing = false;
         self.anchor[domain].parsed = true;
-        self.anchor[domain].toml = stellarToml;
-        self.anchor[domain].deposit_api = stellarToml.DEPOSIT_SERVER;
-        self.anchor[domain].fed_api = stellarToml.FEDERATION_SERVER;
+        self.anchor[domain].toml = monoeciToml;
+        self.anchor[domain].deposit_api = monoeciToml.DEPOSIT_SERVER;
+        self.anchor[domain].fed_api = monoeciToml.FEDERATION_SERVER;
 
-        var currencies = stellarToml.CURRENCIES;
+        var currencies = monoeciToml.CURRENCIES;
         currencies.forEach(function(asset){
           if (asset.host && asset.host.indexOf(domain) < 0) {
             //ignore the asset not issued by this domain

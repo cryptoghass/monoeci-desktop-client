@@ -1,7 +1,7 @@
 /* global myApp, ripple */
 
-myApp.controller("ContactCtrl", ['$scope', '$rootScope', 'AuthenticationFactory', 'StellarApi',
-                        function( $scope ,  $rootScope ,  AuthenticationFactory ,  StellarApi ) {
+myApp.controller("ContactCtrl", ['$scope', '$rootScope', 'AuthenticationFactory', 'MonoeciApi',
+                        function( $scope ,  $rootScope ,  AuthenticationFactory ,  MonoeciApi ) {
     $scope.toggle_form = () => {
       $scope.addform_visible = !$scope.addform_visible;
       $scope.reset_form();
@@ -34,7 +34,7 @@ myApp.controller("ContactCtrl", ['$scope', '$rootScope', 'AuthenticationFactory'
       }
 
       if ($scope.contact.address) {
-        $scope.error['address'] = !(StellarApi.isValidAddress($scope.contact.address)
+        $scope.error['address'] = !(MonoeciApi.isValidAddress($scope.contact.address)
 					|| ripple.UInt160.is_valid($scope.contact.address)
 					|| !isNaN(ripple.Base.decode_check([0, 5], $scope.contact.address, 'bitcoin')));
       } else {
@@ -42,7 +42,7 @@ myApp.controller("ContactCtrl", ['$scope', '$rootScope', 'AuthenticationFactory'
       }
 
       if ($scope.contact.memo) {
-        $scope.error['memo'] = StellarApi.isValidMemo($scope.contact.memotype, $scope.contact.memo);
+        $scope.error['memo'] = MonoeciApi.isValidMemo($scope.contact.memotype, $scope.contact.memo);
       } else {
         $scope.error['memo'] = '';
       }
@@ -75,8 +75,8 @@ myApp.controller("ContactCtrl", ['$scope', '$rootScope', 'AuthenticationFactory'
 
   }]);
 
-myApp.controller("ContactRowCtrl", ['$scope', '$rootScope', '$location', 'AuthenticationFactory', 'StellarApi',
-  function($scope, $rootScope, $location, AuthenticationFactory, StellarApi) {
+myApp.controller("ContactRowCtrl", ['$scope', '$rootScope', '$location', 'AuthenticationFactory', 'MonoeciApi',
+  function($scope, $rootScope, $location, AuthenticationFactory, MonoeciApi) {
 
     $scope.editing = false;
     $scope.cancel = (index) => {
@@ -109,7 +109,7 @@ myApp.controller("ContactRowCtrl", ['$scope', '$rootScope', '$location', 'Authen
       }
 
       if ($scope.editaddress) {
-        $scope.error['address'] = !(StellarApi.isValidAddress($scope.editaddress)
+        $scope.error['address'] = !(MonoeciApi.isValidAddress($scope.editaddress)
 									|| ripple.UInt160.is_valid($scope.editaddress)
 									|| !isNaN(ripple.Base.decode_check([0, 5], $scope.editaddress, 'bitcoin')));
       } else {
@@ -117,7 +117,7 @@ myApp.controller("ContactRowCtrl", ['$scope', '$rootScope', '$location', 'Authen
       }
 
       if ($scope.editmemo) {
-        $scope.error['memo'] = StellarApi.isValidMemo($scope.editmemotype, $scope.editmemo);
+        $scope.error['memo'] = MonoeciApi.isValidMemo($scope.editmemotype, $scope.editmemo);
       } else {
         $scope.error['memo'] = '';
       }

@@ -1,7 +1,7 @@
 /* global $, b64DecodeUnicode, myApp */
 
-myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory', 'StellarApi',
-                         function( $scope ,  $rootScope ,  AuthenticationFactory ,  StellarApi ) {
+myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory', 'MonoeciApi',
+                         function( $scope ,  $rootScope ,  AuthenticationFactory ,  MonoeciApi ) {
     $scope.mode = 'security';
     $scope.isMode = (mode) => {
       return $scope.mode === mode;
@@ -22,9 +22,9 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
 
     $scope.network_error;
     $scope.refresh = () => {
-      StellarApi.getInfo(null, (err, data) => {
+      MonoeciApi.getInfo(null, (err, data) => {
         if (err) {
-          $scope.network_error = StellarApi.getErrMsg(err);
+          $scope.network_error = MonoeciApi.getErrMsg(err);
         } else {
           $scope.inflation = data.inflation_destination;
           $scope.domain = data.home_domain;
@@ -52,7 +52,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
 
       try {
         // 2. Get Te
-        const te = await StellarApi.setOption('inflationDest', $scope.inflation);
+        const te = await MonoeciApi.setOption('inflationDest', $scope.inflation);
 
         // 3. Pass te to signModal, wait for response and then close it.
         $scope.te = te;
@@ -70,7 +70,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
         $scope.$apply();
 
         // 4. Submit teSigned
-        const result = await StellarApi.submitTransaction(teSigned);
+        const result = await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Show success.
         $scope.inflation_done = true;
@@ -78,7 +78,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
       } catch(err) {
         // 5b. Show error.
         console.error(err)
-        $scope.inflation_error = StellarApi.getErrMsg(err);
+        $scope.inflation_error = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.inflation_working = false;
@@ -118,7 +118,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
 
       try {
         // 2. Get Te
-        const te = await StellarApi.setOption('homeDomain', $scope.domain);
+        const te = await MonoeciApi.setOption('homeDomain', $scope.domain);
 
         // 3. Pass te to signModal, wait for response and then close it.
         $scope.te = te;
@@ -131,7 +131,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
           });
 
         // 4. Submit teSigned
-        const result = await StellarApi.submitTransaction(teSigned);
+        const result = await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Handle success.
         $scope.domain_done = true;
@@ -139,7 +139,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
       } catch(err) {
         // 5b. Handle error.
         console.error(err)
-        $scope.domain_error = StellarApi.getErrMsg(err);
+        $scope.domain_error = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.domain_working = false;
@@ -163,7 +163,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
 
       try {
         // 2. Get Te
-        const te = await StellarApi.setData($scope.data_key, $scope.data_value);
+        const te = await MonoeciApi.setData($scope.data_key, $scope.data_value);
 
         // 3. Pass te to signModal, wait for response and then close it.
         $scope.te = te;
@@ -181,7 +181,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
         $scope.$apply();
 
         // 4. Submit teSigned
-        const result = await StellarApi.submitTransaction(teSigned);
+        const result = await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Handle success.
         if ($scope.data_value) {
@@ -194,7 +194,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
       } catch(err) {
         // 5b. Handle error.
         console.error(err)
-        $scope.data_error = StellarApi.getErrMsg(err);
+        $scope.data_error = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.data_working = false;
@@ -215,7 +215,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
 
       try {
         // 2. Get Te
-        const te = await StellarApi.merge($scope.dest_account);
+        const te = await MonoeciApi.merge($scope.dest_account);
 
         // 3. Pass te to signModal, wait for response and then close it.
         $scope.te = te;
@@ -233,7 +233,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
         $scope.$apply();
 
         // 4. Submit teSigned
-        const result = await StellarApi.submitTransaction(teSigned);
+        const result = await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Handle success.
         $rootScope.balance = 0;
@@ -243,7 +243,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
       } catch(err) {
         // 5b. Handle error.
         console.error(err)
-        $scope.merge_error = StellarApi.getErrMsg(err);
+        $scope.merge_error = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.merge_working = false;

@@ -1,12 +1,12 @@
 /* global myApp */
 
-myApp.controller("BalanceCtrl", [ '$scope', '$rootScope', '$http', 'StellarApi', 'AnchorFactory',
-                         function( $scope ,  $rootScope ,  $http ,  StellarApi ,  AnchorFactory ) {
+myApp.controller("BalanceCtrl", [ '$scope', '$rootScope', '$http', 'MonoeciApi', 'AnchorFactory',
+                         function( $scope ,  $rootScope ,  $http ,  MonoeciApi ,  AnchorFactory ) {
     $scope.working = false;
     $scope.refresh = function() {
       if ($scope.working) { return; }
       $scope.working = true;
-      StellarApi.queryAccount(function(err){
+      MonoeciApi.queryAccount(function(err){
         $scope.$apply(function(){
           $scope.working = false;
         });
@@ -15,7 +15,7 @@ myApp.controller("BalanceCtrl", [ '$scope', '$rootScope', '$http', 'StellarApi',
     };
     $scope.delTrust = function(code, issuer) {
       $scope.setRemoving(code, issuer, true);
-      StellarApi.changeTrust(code, issuer, "0", function(err, data){
+      MonoeciApi.changeTrust(code, issuer, "0", function(err, data){
         $scope.setRemoving(code, issuer, false);
         $scope.$apply();
       });
@@ -40,7 +40,7 @@ myApp.controller("BalanceCtrl", [ '$scope', '$rootScope', '$http', 'StellarApi',
     $scope.getPrice = function(code, issuer, callback) {
       var base = {code: code, issuer: issuer};
       var counter = {code: $rootScope.currentNetwork.coin.code, issuer: ''};
-      StellarApi.queryBook(base, counter, function(err, data) {
+      MonoeciApi.queryBook(base, counter, function(err, data) {
         if (err) {
           console.error('Price ' + base + '.' + issuer, err);
         } else {

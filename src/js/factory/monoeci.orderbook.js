@@ -1,6 +1,6 @@
-/* global myApp, StellarSdk */
+/* global myApp, MonoeciSdk */
 
-myApp.factory('StellarOrderbook', ['$rootScope',
+myApp.factory('MonoeciOrderbook', ['$rootScope',
                           function( $rootScope ) {
   let _server;
   let _closeBookStream;
@@ -10,7 +10,7 @@ myApp.factory('StellarOrderbook', ['$rootScope',
       issuer = code.issuer;
       code = code.code;
     }
-    return code == $rootScope.currentNetwork.coin.code ? new StellarSdk.Asset.native() : new StellarSdk.Asset(code, issuer);
+    return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
   }
 
   const getKey = (code, issuer) => {

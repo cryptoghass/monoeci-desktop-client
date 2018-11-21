@@ -20,7 +20,7 @@
         </div>
         <div class="row" style="margin-bottom: 20px;">
           <div class="col-xs-12">
-            <h4 translate="switch_net">Switch Stellar Network</h4>
+            <h4 translate="switch_net">Switch Monoeci Network</h4>
             <p translate="switch_net_desc">The testnet is for, well, testing. It’s occasionally reset, so don’t get attached to any balances or accounts that you have on it.</p>
             <div class="btn-group  btn-group-sm" role="group" aria-label="Network options">
           <button type="button" class="btn btn-success" ng-repeat="n in all_networks" ng-class="{active: network_type == n.networkType}" ng-click="set(n.networkType)" ng-disabled="n.networkType == 'fic'">
@@ -51,7 +51,7 @@
           </div>
           <div class="col-xs-12" ng-show="network_type == 'other'">
             <label translate="coin_ticket">coin ticket</label>
-            <input class="form-control" type="text" ng-model="network_coin" placeholder="XLM"/>
+            <input class="form-control" type="text" ng-model="network_coin" placeholder="XMCC"/>
           </div>
         </div>
         <div class="s-alert s-alert--alert row__message" ng-show="network_error">

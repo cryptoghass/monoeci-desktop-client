@@ -1,7 +1,7 @@
-/* global Buffer, fetch, moment, myApp, StellarSdk, Web3 */
+/* global Buffer, fetch, moment, myApp, MonoeciSdk, Web3 */
 
-myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
-                       function( $http ,  SettingFactory ,  StellarApi ) {
+myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'MonoeciApi',
+                       function( $http ,  SettingFactory ,  MonoeciApi ) {
 
   // const MIN_AMOUNT = 1000;  // Real minimal amount is 600.00002 FIC.
 
@@ -13,14 +13,14 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
   const TEST_LOCKUP_180 = TEST_LOCKUP_0 + (60 * 60 * 24) * 10 * 1000; // Wed, 19 Jul 2018 6:00:00 +0000
 
   const Unlock = (ficAddress, lockupAddress, lockup) => async () => {
-    const SUBMIT = async (te) => StellarApi.server.submitTransaction(te).catch((e)=>e).then((res)=>res)
+    const SUBMIT = async (te) => MonoeciApi.server.submitTransaction(te).catch((e)=>e).then((res)=>res)
 
     let lockupAccount;
     try {
-      lockupAccount = await StellarApi.server.loadAccount(lockupAddress);
+      lockupAccount = await MonoeciApi.server.loadAccount(lockupAddress);
       lockupAccount._baseAccount.sequence.minus(2);
     } catch(e) {
-      if(e instanceof StellarSdk.NotFoundError) throw new Error(`Already unlocked (${lockupAddress})`);
+      if(e instanceof MonoeciSdk.NotFoundError) throw new Error(`Already unlocked (${lockupAddress})`);
       throw e;
     }
     // console.log(`Lockup account ${lockupAddress} sequence & balance:`, lockupAccount.sequenceNumber(), lockupAccount.balances)
@@ -41,16 +41,16 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
       }
     }
 
-    const prete1 = new StellarSdk.TransactionBuilder(lockupAccount, { timebounds })
-      .addOperation(StellarSdk.Operation.createAccount({
+    const prete1 = new MonoeciSdk.TransactionBuilder(lockupAccount, { timebounds })
+      .addOperation(MonoeciSdk.Operation.createAccount({
         source: lockupAddress,
         destination: ficAddress,
         startingBalance: '400',
       }))
       .build();
 
-    const prete2 = new StellarSdk.TransactionBuilder(lockupAccount, { timebounds })
-      .addOperation(StellarSdk.Operation.accountMerge({
+    const prete2 = new MonoeciSdk.TransactionBuilder(lockupAccount, { timebounds })
+      .addOperation(MonoeciSdk.Operation.accountMerge({
         source: lockupAddress,
         destination: ficAddress,
       }))
@@ -69,7 +69,7 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
     async getFicTxs(userAddress) {
       if(!await this.initPromise) throw new Error('Not useful, see state and comments');
 
-      const directoryResponse = await fetch(`${StellarApi.server.serverURL}/accounts/${this.ficDistributorAddress}`);
+      const directoryResponse = await fetch(`${MonoeciApi.server.serverURL}/accounts/${this.ficDistributorAddress}`);
       const directory = await directoryResponse.json();
       const lockupAddressMap = directory.data;
 
@@ -81,10 +81,10 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
         const lockupAddress = Buffer.from(lockupAddressMap[key], 'base64').toString();
 
         //console.log(lockupAddress);
-        const res = await fetch(`${StellarApi.server.serverURL}/accounts/${lockupAddress}/transactions?order=desc&limit=4`);
+        const res = await fetch(`${MonoeciApi.server.serverURL}/accounts/${lockupAddress}/transactions?order=desc&limit=4`);
         const json = await res.json();
         const transactions = json._embedded.records;
-        transactions.forEach((transaction) => transaction.envelope = new StellarSdk.Transaction(transaction.envelope_xdr));
+        transactions.forEach((transaction) => transaction.envelope = new MonoeciSdk.Transaction(transaction.envelope_xdr));
 
         const creationTransation = transactions.find((tx)=>tx.source_account==this.ficDistributorAddress && tx.envelope.operations.find((op)=>op.type === 'createAccount'))
         const setupTransaction = transactions.find((tx)=>tx.source_account==this.ficDistributorAddress && tx.envelope.operations.find((op)=>op.type === 'setOptions'));
@@ -118,7 +118,7 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
       if(!await this.initPromise) throw new Error('Not useful, see state and comments');
       try {
         const methodHash = this.web3.utils.sha3('withdraw(bytes32,uint256,uint8)').slice(2, 10);
-        const pk = StellarSdk.StrKey.decodeEd25519PublicKey(publicKey).toString('hex');
+        const pk = MonoeciSdk.StrKey.decodeEd25519PublicKey(publicKey).toString('hex');
         const tokens = this._BN(this.web3.utils.toWei(amount, 'ether'));
         const hexData = [
           methodHash,
@@ -176,7 +176,7 @@ myApp.factory('FicIcoFactory', ['$http', 'SettingFactory', 'StellarApi',
       tx.blockNumber = event.blockNumber;
       tx.who = eventValues.who;
       tx.beneficiary = eventValues.beneficiary;
-      tx.publicKey = StellarSdk.StrKey.encodeEd25519PublicKey(this.web3.utils.hexToBytes(eventValues.publicKey));
+      tx.publicKey = MonoeciSdk.StrKey.encodeEd25519PublicKey(this.web3.utils.hexToBytes(eventValues.publicKey));
       tx.amount = this._BN(eventValues.amount).div(this._BN(1e18)).toString();
       tx.lockup = eventValues.lockup;
       tx.txHash = event.transactionHash;

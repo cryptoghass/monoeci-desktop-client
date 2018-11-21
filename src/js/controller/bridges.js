@@ -1,7 +1,7 @@
-/* global myApp, StellarSdk */
+/* global myApp, MonoeciSdk */
 
-myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'AnchorFactory', 'StellarApi', '$http',
-                        function( $scope ,  $rootScope ,  SettingFactory ,  AnchorFactory ,  StellarApi ,  $http ) {
+myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'AnchorFactory', 'MonoeciApi', '$http',
+                        function( $scope ,  $rootScope ,  SettingFactory ,  AnchorFactory ,  MonoeciApi ,  $http ) {
     $scope.bridges = {};
     $scope.anchor;
     $scope.anchor_name = SettingFactory.getBridgeService();
@@ -36,12 +36,12 @@ myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Anch
     $scope.resolve = function(){
       $scope.fed_url = "";
       $scope.fed = undefined;
-      StellarSdk.StellarTomlResolver.resolve($scope.anchor_name).then(function(stellarToml) {
-        console.debug(stellarToml);
-        var currencies = stellarToml.CURRENCIES;
-        var deposit_api = stellarToml.DEPOSIT_SERVER;
-        $scope.fed_url = stellarToml.FEDERATION_SERVER;
-        $scope.fed = new StellarSdk.FederationServer(stellarToml.FEDERATION_SERVER, $scope.anchor_name, {});
+      MonoeciSdk.MonoeciTomlResolver.resolve($scope.anchor_name).then(function(monoeciToml) {
+        console.debug(monoeciToml);
+        var currencies = monoeciToml.CURRENCIES;
+        var deposit_api = monoeciToml.DEPOSIT_SERVER;
+        $scope.fed_url = monoeciToml.FEDERATION_SERVER;
+        $scope.fed = new MonoeciSdk.FederationServer(monoeciToml.FEDERATION_SERVER, $scope.anchor_name, {});
         if (!deposit_api) { return; }
         currencies.forEach(function(asset){
           if (asset.host && asset.host.indexOf($scope.anchor_name) < 0) {
@@ -268,11 +268,11 @@ myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Anch
       $scope.send_done = false;
       $scope.send_error = '';
 
-      StellarApi.send($scope.destination, $scope.asset.code, $scope.asset.issuer,
+      MonoeciApi.send($scope.destination, $scope.asset.code, $scope.asset.issuer,
         $scope.asset.amount, $scope.memo_type, $scope.memo, function(err, result){
           $scope.sending = false;
           if (err) {
-            $scope.send_error = StellarApi.getErrMsg(err);
+            $scope.send_error = MonoeciApi.getErrMsg(err);
           } else {
             $scope.service_amount = 0;
             $scope.send_done = true;
@@ -285,10 +285,10 @@ myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Anch
     $scope.addTrust = function(code, issuer) {
       $scope.deposit[code].trust_error = "";
       $scope.deposit[code].changing = true;
-      StellarApi.changeTrust(code, issuer, "100000000000", function(err, data){
+      MonoeciApi.changeTrust(code, issuer, "100000000000", function(err, data){
         $scope.deposit[code].changing = false;
         if (err) {
-          $scope.deposit[code].trust_error = StellarApi.getErrMsg(err);
+          $scope.deposit[code].trust_error = MonoeciApi.getErrMsg(err);
         }
         $rootScope.$apply();
       });

@@ -184,12 +184,12 @@
 						<span>{{send_error.message}}</span>
 					</div>
 
-					<div class="alert alert-success" role="alert" ng-show="send_done" ng-if="send_result.stellarGuard">
+					<div class="alert alert-success" role="alert" ng-show="send_done" ng-if="send_result.monoeciGuard">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-						<span><stellarguard-result result="send_result"></stellarguard-result></span>
+						<span><monoeciguard-result result="send_result"></monoeciguard-result></span>
 					</div>
 
-					<div class="alert alert-success" role="alert" ng-show="send_done" ng-if="!send_result.stellarGuard">
+					<div class="alert alert-success" role="alert" ng-show="send_done" ng-if="!send_result.monoeciGuard">
 						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 						<span translate="send_done">Asset successfully sent.</span>
 					</div>

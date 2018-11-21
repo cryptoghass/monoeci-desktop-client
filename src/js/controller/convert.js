@@ -1,7 +1,7 @@
 /* global myApp */
 
-myApp.controller("ConvertCtrl", ['$scope', '$rootScope', 'StellarApi',
-                        function( $scope ,  $rootScope ,  StellarApi ) {
+myApp.controller("ConvertCtrl", ['$scope', '$rootScope', 'MonoeciApi',
+                        function( $scope ,  $rootScope ,  MonoeciApi ) {
     $scope.send = [];
     $scope.dst_amount = 0;
     $scope.dst_currency = '';
@@ -39,7 +39,7 @@ myApp.controller("ConvertCtrl", ['$scope', '$rootScope', 'StellarApi',
       $scope.finding = true;
       $scope.send_done = false;
       $scope.send_error = '';
-      StellarApi.queryPath($rootScope.address, $rootScope.address, arr[0], arr[1], amount, function(err, data){
+      MonoeciApi.queryPath($rootScope.address, $rootScope.address, arr[0], arr[1], amount, function(err, data){
         $scope.finding = false;
         if (err) {
           if (typeof err == "string") {
@@ -109,11 +109,11 @@ myApp.controller("ConvertCtrl", ['$scope', '$rootScope', 'StellarApi',
       $scope.send_error = '';
 
       $scope.asset.max_rate = 1.0001;
-      StellarApi.convert($scope.asset, function(err, result){
+      MonoeciApi.convert($scope.asset, function(err, result){
         $scope.sending = false;
 
         if (err) {
-          $scope.send_error = StellarApi.getErrMsg(err);
+          $scope.send_error = MonoeciApi.getErrMsg(err);
         } else {
           $scope.dst_amount = 0;
           $scope.paths = {};

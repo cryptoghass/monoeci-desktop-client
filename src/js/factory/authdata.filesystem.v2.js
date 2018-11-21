@@ -1,4 +1,4 @@
-/* global Buffer, CONST, invokeIPC, myApp, StellarSdk */
+/* global Buffer, CONST, invokeIPC, myApp, MonoeciSdk */
 
 // There's currently a code repetition between blobLocal and blobRemote..
 'use strict';
@@ -28,7 +28,7 @@ myApp.factory('AuthDataFilesystemV2', ['$window', 'AuthData', 'SettingFactory',
         network: SettingFactory.getCurrentNetwork().networkPassphrase,
         address: opts.address,
         keypairs: opts.keypairs || opts.secrets.map((secret)=>({
-          publicKey: StellarSdk.Keypair.fromSecret(secret).publicKey(),
+          publicKey: MonoeciSdk.Keypair.fromSecret(secret).publicKey(),
           signingMethod: CONST.SIGNING_METHOD.ENCRYPTED_SECRET,
           details: secret,
         })),
@@ -97,7 +97,7 @@ myApp.factory('AuthDataFilesystemV2', ['$window', 'AuthData', 'SettingFactory',
 
     async signWithEncryptedSecret(publicKey, teHash) {
       const serializedDecoratedSignature = await invokeIPC(CONST.KEYSTORE_API.SIGN, publicKey, teHash)
-      const signature = StellarSdk.xdr.DecoratedSignature.fromXDR(Buffer.from(serializedDecoratedSignature, 'base64'))
+      const signature = MonoeciSdk.xdr.DecoratedSignature.fromXDR(Buffer.from(serializedDecoratedSignature, 'base64'))
       return signature;
     }
 

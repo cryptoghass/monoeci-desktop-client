@@ -1,7 +1,7 @@
-/* global _, myApp, round, StellarSdk */
+/* global _, myApp, round, MonoeciSdk */
 
-myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook', 'StellarPath', 'AuthenticationFactory', 'StellarGuard',
-                    function( $rootScope ,  StellarHistory ,  StellarOrderbook ,  StellarPath ,  AuthenticationFactory ,  StellarGuard ) {
+myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook', 'MonoeciPath', 'AuthenticationFactory', 'MonoeciGuard',
+                    function( $rootScope ,  MonoeciHistory ,  MonoeciOrderbook ,  MonoeciPath ,  AuthenticationFactory ,  MonoeciGuard ) {
 
     let _balances = {};
     let _closeAccountStream;  // function that closes a stream.
@@ -18,7 +18,7 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         issuer = code.issuer;
         code = code.code;
       }
-      return code == $rootScope.currentNetwork.coin.code ? new StellarSdk.Asset.native() : new StellarSdk.Asset(code, issuer);
+      return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
     }
 
 
@@ -58,38 +58,38 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = StellarSdk.Operation.createAccount({
+        const payment = MonoeciSdk.Operation.createAccount({
           destination: target,
           startingBalance: amount.toString()
         });
-        const memo = new StellarSdk.Memo(memo_type, memo_value);
-        return new StellarSdk.TransactionBuilder(account, {memo}).addOperation(payment).build();
+        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
+        return new MonoeciSdk.TransactionBuilder(account, {memo}).addOperation(payment).build();
       },
 
       async _sendCoin(target, amount, memo_type, memo_value) {
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = StellarSdk.Operation.payment({
+        const payment = MonoeciSdk.Operation.payment({
           destination: target,
-          asset: StellarSdk.Asset.native(),
+          asset: MonoeciSdk.Asset.native(),
           amount: amount.toString()
         });
-        const memo = new StellarSdk.Memo(memo_type, memo_value);
-        return new StellarSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
+        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
+        return new MonoeciSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
       },
 
       async _sendToken(target, currency, issuer, amount, memo_type, memo_value) {
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = StellarSdk.Operation.payment({
+        const payment = MonoeciSdk.Operation.payment({
           destination: target,
-          asset: new StellarSdk.Asset(currency, issuer),
+          asset: new MonoeciSdk.Asset(currency, issuer),
           amount: amount.toString()
         });
-        const memo = new StellarSdk.Memo(memo_type, memo_value);
-        return new StellarSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
+        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
+        return new MonoeciSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
       },
 
       _updateRootBalance(balances = _balances) {
@@ -123,13 +123,13 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         console.debug('Sell', amount, selling.code, 'for', buying.code, '@', price);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.manageOffer({
+        const op = MonoeciSdk.Operation.manageOffer({
           selling: selling,
           buying: buying,
           amount: amount.toString(),
           price : price.toString()
         });
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       _closeStream() {
@@ -162,31 +162,31 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         _seq.snapshot = "";
         _seq.time = new Date();
         this._closeStream();
-        StellarOrderbook.close();
-        StellarPath.close();
+        MonoeciOrderbook.close();
+        MonoeciPath.close();
       },
 
       isValidAddress(address) {
-        return StellarSdk.StrKey.isValidEd25519PublicKey(address);
+        return MonoeciSdk.StrKey.isValidEd25519PublicKey(address);
       },
 
       federation(fed_url) {
-        return StellarSdk.StellarTomlResolver.resolve(fed_url);
+        return MonoeciSdk.MonoeciTomlResolver.resolve(fed_url);
       },
 
       setServer(url, passphrase, allowHttp=false) {
         if(!url) throw new Error('No URL')
         console.debug("Use Network: " + url + ', Passphrase: ' + passphrase);
-        StellarSdk.Network.use(new StellarSdk.Network(passphrase));
-        _server = new StellarSdk.Server(url, {allowHttp});
-        StellarHistory.setServer(_server);
-        StellarOrderbook.setServer(_server);
-        StellarPath.setServer(_server);
+        MonoeciSdk.Network.use(new MonoeciSdk.Network(passphrase));
+        _server = new MonoeciSdk.Server(url, {allowHttp});
+        MonoeciHistory.setServer(_server);
+        MonoeciOrderbook.setServer(_server);
+        MonoeciPath.setServer(_server);
       },
 
       isValidMemo(type, memo) {
         try {
-          new StellarSdk.Memo(type, memo);
+          new MonoeciSdk.Memo(type, memo);
           return '';
         } catch (e) {
           return e.message;
@@ -212,9 +212,9 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         console.debug(alt.origin.source_amount + '/' + alt.src_code + ' -> ' + alt.origin.destination_amount + '/' + alt.dst_code);
         const path = alt.origin.path.map((item) => {
           if (item.asset_type == 'native') {
-            return new StellarSdk.Asset.native();
+            return new MonoeciSdk.Asset.native();
           } else {
-            return new StellarSdk.Asset(item.asset_code, item.asset_issuer);
+            return new MonoeciSdk.Asset(item.asset_code, item.asset_issuer);
           }
         });
         let sendMax = alt.origin.source_amount;
@@ -223,7 +223,7 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         }
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const pathPayment = StellarSdk.Operation.pathPayment({
+        const pathPayment = MonoeciSdk.Operation.pathPayment({
           destination: this.address,
           sendAsset  : getAsset(alt.src_code, alt.src_issuer),
           sendMax    : sendMax,
@@ -231,7 +231,7 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
           destAmount : alt.origin.destination_amount,
           path       : path
         });
-        return new StellarSdk.TransactionBuilder(account).addOperation(pathPayment).build();
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(pathPayment).build();
       },
 
       listenStream() {
@@ -260,7 +260,7 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
           .cursor("now")
           .stream({
             onmessage: (res) => {
-              const tx = StellarHistory.processTx(res, this.address);
+              const tx = MonoeciHistory.processTx(res, this.address);
               console.log('tx stream', tx);
             }
           });
@@ -282,15 +282,15 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
       },
 
       async changeTrust(code, issuer, limit) {
-        const asset = new StellarSdk.Asset(code, issuer);
+        const asset = new MonoeciSdk.Asset(code, issuer);
         console.debug('Turst asset', asset, limit);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.changeTrust({
+        const op = MonoeciSdk.Operation.changeTrust({
           asset: asset,
           limit: limit.toString()
         });
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       async setOption(name, value) {
@@ -299,8 +299,8 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         console.debug('set option:', name, '-', value);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.setOptions(opt);
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = MonoeciSdk.Operation.setOptions(opt);
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       async setData(name, value) {
@@ -308,8 +308,8 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         console.debug('manageData:', name, '-', value);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.manageData(opt);
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = MonoeciSdk.Operation.manageData(opt);
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       async merge(destAccount) {
@@ -317,8 +317,8 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         console.debug('merge:', this.address, '->', destAccount);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.accountMerge(opt);
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = MonoeciSdk.Operation.accountMerge(opt);
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       queryAccount(callback) {
@@ -340,56 +340,56 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
 
       queryPayments(callback) {
         console.debug('payments', this.address);
-        StellarHistory.payments(this.address, callback);
+        MonoeciHistory.payments(this.address, callback);
       },
 
       queryPaymentsNext(addressOrPage, callback) {
         console.debug('loop payments', this.address);
-        StellarHistory.payments(addressOrPage, callback);
+        MonoeciHistory.payments(addressOrPage, callback);
       },
 
       queryEffects(callback) {
         console.debug('effects', this.address);
-        StellarHistory.effects(this.address, callback);
+        MonoeciHistory.effects(this.address, callback);
       },
 
       queryEffectsNext(addressOrPage, callback) {
         console.debug('loop effects', this.address);
-        StellarHistory.effects(addressOrPage, callback);
+        MonoeciHistory.effects(addressOrPage, callback);
       },
 
       queryTransactions(callback) {
         console.debug('transactions', this.address);
-        StellarHistory.transactions(this.address, callback);
+        MonoeciHistory.transactions(this.address, callback);
       },
 
       queryTransactionsNext(page, callback) {
         console.debug('loop transactions');
-        StellarHistory.transactions(page, callback);
+        MonoeciHistory.transactions(page, callback);
       },
 
       queryBook(baseBuy, counterSell, callback) {
-        StellarOrderbook.get(baseBuy, counterSell, callback);
+        MonoeciOrderbook.get(baseBuy, counterSell, callback);
       },
 
       listenOrderbook(baseBuying, counterSelling, handler) {
-        StellarOrderbook.listen(baseBuying, counterSelling, handler);
+        MonoeciOrderbook.listen(baseBuying, counterSelling, handler);
       },
 
       closeOrderbook() {
-        StellarOrderbook.close();
+        MonoeciOrderbook.close();
       },
 
       queryPath(src, dest, code, issuer, amount, callback) {
-        StellarPath.get(src, dest, code, issuer, amount, callback);
+        MonoeciPath.get(src, dest, code, issuer, amount, callback);
       },
 
       listenPath(src, dest, code, issuer, amount, handler) {
-        StellarHistory.listen(src, dest, code, issuer, amount, handler);
+        MonoeciHistory.listen(src, dest, code, issuer, amount, handler);
       },
 
       closePath() {
-        StellarHistory.close();
+        MonoeciHistory.close();
       },
 
       async queryOffer(callback) {
@@ -431,28 +431,28 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
           price   = round(offer.price, 7);
           offer_id = offer.id;
         } else {
-          selling = StellarSdk.Asset.native();
-          buying  = new StellarSdk.Asset('DUMMY', this.address);
+          selling = MonoeciSdk.Asset.native();
+          buying  = new MonoeciSdk.Asset('DUMMY', this.address);
           price   = "1";
           offer_id = offer;
         }
         console.debug('Cancel Offer', offer_id);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = StellarSdk.Operation.manageOffer({
+        const op = MonoeciSdk.Operation.manageOffer({
           selling: selling,
           buying: buying,
           amount: "0",
           price : price,
           offerId : offer_id
         });
-        return new StellarSdk.TransactionBuilder(account).addOperation(op).build();
+        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
       },
 
       async _submitTransaction(transaction, account) {
         const te = AuthenticationFactory.sign(transaction)
-        if(StellarGuard.hasStellarGuard(account)) {
-          return StellarGuard.submitTransaction(te);
+        if(MonoeciGuard.hasMonoeciGuard(account)) {
+          return MonoeciGuard.submitTransaction(te);
         } else {
           return _server.submitTransaction(te);
         }
@@ -460,11 +460,11 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
 
       async getFedName(domain, address) {
         try {
-          const server = await StellarSdk.FederationServer.createForDomain(domain);
+          const server = await MonoeciSdk.FederationServer.createForDomain(domain);
           const data = await server.resolveAccountId(address);
-          if(data.stellar_address) {
-            const index = data.stellar_address.indexOf("*");
-            const fed_name = data.stellar_address.substring(0, index);
+          if(data.monoeci_address) {
+            const index = data.monoeci_address.indexOf("*");
+            const fed_name = data.monoeci_address.substring(0, index);
             return fed_name;
           }
         } catch(err) {
@@ -477,7 +477,7 @@ myApp.factory('StellarApi', ['$rootScope', 'StellarHistory', 'StellarOrderbook',
         if (err.name == "NotFoundError") {
           message = "NotFoundError";
         } else if (err.data && err.data.extras && err.data.extras.result_xdr) {
-          const resultXdr = StellarSdk.xdr.TransactionResult.fromXDR(err.data.extras.result_xdr, 'base64');
+          const resultXdr = MonoeciSdk.xdr.TransactionResult.fromXDR(err.data.extras.result_xdr, 'base64');
           if (resultXdr.result().results()) {
             message = resultXdr.result().results()[0].value().value().switch().name;
           } else {

@@ -1,6 +1,6 @@
-/* global myApp, StellarSdk */
+/* global myApp, MonoeciSdk */
 
-myApp.factory('StellarPath', ['$rootScope',
+myApp.factory('MonoeciPath', ['$rootScope',
                      function( $rootScope ) {
   let _server;
   let _closeStream;
@@ -10,7 +10,7 @@ myApp.factory('StellarPath', ['$rootScope',
       issuer = code.issuer;
       code = code.code;
     }
-    return code == $rootScope.currentNetwork.coin.code ? new StellarSdk.Asset.native() : new StellarSdk.Asset(code, issuer);
+    return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
   }
 
   return {
@@ -35,7 +35,7 @@ myApp.factory('StellarPath', ['$rootScope',
       });
     },
 
-    // stellar-sdk does not have path stream feature. :(
+    // monoeci-sdk does not have path stream feature. :(
     listen(src, dest, code, issuer, amount, handler) {
       console.debug('listen path ' + amount + ' ' + code);
       _closeStream = _server.paths(src, dest, getAsset(code, issuer), amount).stream({

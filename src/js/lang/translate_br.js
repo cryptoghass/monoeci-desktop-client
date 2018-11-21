@@ -1,6 +1,6 @@
 /* exported translate_br */
 var translate_br = {
-    header_wellcome : 'Stellar é uma plataforma que conecta bancos, sistemas de pagamentos, e pessoas.',
+    header_wellcome : 'Monoeci é uma plataforma que conecta bancos, sistemas de pagamentos, e pessoas.',
     login_desc : 'Você poderá utilizar uma chave secreta apenas para contas já existentes. Isso é devido ao cliente desktop armazenar suas informações de login em seu computador, então sua conta estará tão segura quanto seu computador.',
     open_wallet: 'Acessar Carteira',
     create_wallet: 'Criar Carteira',
@@ -31,7 +31,7 @@ var translate_br = {
     show_password : 'Mostrar senha',
     hide_password : 'Ocultar senha',
     account_address : 'Endereço da conta',
-    stellar_address : 'Endereço Stellar',
+    monoeci_address : 'Endereço Monoeci',
     secret_key : 'Chave secreta e QRCode:',
     show_secret: 'Mostrar minha chave secreta',
     hide_secret: 'Ocultar chave secreta',
@@ -48,8 +48,8 @@ var translate_br = {
     trust : 'Confiança',
     asset : 'Ativo',
     trust_limit : 'Limite de confiança',
-    add_trust : 'Conceder confiança para âncoras conhecidos pela comunidade Stellar',
-    trust_src : 'Esta é uma lista de âncoras da comunidade Stellar.',
+    add_trust : 'Conceder confiança para âncoras conhecidos pela comunidade Monoeci',
+    trust_src : 'Esta é uma lista de âncoras da comunidade Monoeci.',
     trust_note: 'Nota: NÃO nos responsabilizamos pela confiança em nenhuma dessas âncoras.',
     trust_remove : 'Revogar confiança',
     trust_remove_desc : 'A confiança é removível quando o saldo é 0',
@@ -167,7 +167,7 @@ var translate_br = {
     selling    : 'Vendendo',
     /** ICO **/
     ico : 'ICO',
-    ico_stellar : 'Utilizando Stellar para ICOs',
+    ico_monoeci : 'Utilizando Monoeci para ICOs',
     ico_note: 'Nota: Antes de se envolver em uma OIC, investidores e entusiastas em criptomoedas precisam considerar os riscos envolvidos ao participar. NÃO recomendamos nenhum desses projetos.',
     ico_instruction: 'Depois de adicionar a linha de confiança, selecione "Negociar - Conversões". Você pode usar qualquer moeda para comprar o ICO.',
     /** SIGN OFFLINE **/
@@ -184,8 +184,8 @@ var translate_br = {
     public_net : 'Public Network',
     test_net   : 'Test Network',
     other_net  : 'User defined',
-    'Stellar Public Network' : 'Rede pública Stellar',
-    'Stellar Test Network' : 'Rede de testes Stellar',
+    'Monoeci Public Network' : 'Rede pública Monoeci',
+    'Monoeci Test Network' : 'Rede de testes Monoeci',
     'User defined' : 'Usuário definido',
     public_url : 'Public Net URL',
     test_url   : 'Test Net URL',
@@ -218,7 +218,7 @@ var translate_br = {
     domain_done : 'Home Domain was set.',
     manage_data : 'Gerenciador de dados',
     data_desc1  : 'Permite que você defina, modifique ou exclua uma entrada de dados (par nome / valor) anexada a uma conta específica. Uma conta pode ter uma quantidade arbitrária de DataEntries anexada a ela. Cada DataEntry aumenta o saldo mínimo necessário para ser mantido pela conta.',
-    data_desc2  : 'DataEntries pode ser usado para coisas específicas do aplicativo. Eles não são usados pelo protocolo Stellar central.',
+    data_desc2  : 'DataEntries pode ser usado para coisas específicas do aplicativo. Eles não são usados pelo protocolo Monoeci central.',
     data_key    : 'Nome (chave)',
     data_value  : 'Valor',
     data_done   : 'Data entry definido.',
@@ -244,20 +244,20 @@ var translate_br = {
     analyzing : 'Analisando ...',
     will_recv : 'O destinatário receberá',
     can_send  : 'Você pode enviar',
-    Stellar : 'Stellar',
-    stellar_desktop_client : 'Carteira Foxlet',
+    Monoeci : 'Monoeci',
+    monoeci_desktop_client : 'Carteira Monoeci',
     app_open_source  : '',
     app_safe_notice  : 'O cliente armazena suas informações de login criptografadas localmente no seu computador. Por favor, faça um backup do seu segredo com cuidado.',
-    app_feedback     : 'Foxlet é open source agora! Você pode nos encontrar no GitHub:',
+    app_feedback     : 'Monoeci é open source agora! Você pode nos encontrar no GitHub:',
     trade_volume : 'Volume de negociações',
     wallet : 'Carteira',
     version: 'Versão',
     logout : 'Sair',
     new_version_available: 'Nova versão disponível!',
 
-    /** StellarGuard **/
-    stellarguard_submitted: 'Sua transação foi enviada para StellarGuard e está aguardando autorização.',
-    stellarguard_authorize: 'Autorizar Transação',
+    /** MonoeciGuard **/
+    monoeciguard_submitted: 'Sua transação foi enviada para MonoeciGuard e está aguardando autorização.',
+    monoeciguard_authorize: 'Autorizar Transação',
 
     /** FIC Network **/
     ficnetwork: 'FIC ICO',

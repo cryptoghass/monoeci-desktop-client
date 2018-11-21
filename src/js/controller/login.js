@@ -1,7 +1,7 @@
 /* global $, CONST, myApp, require */
 
-myApp.controller('LoginCtrl', ['$scope', '$rootScope', '$window', '$location', 'AuthenticationFactory', 'SettingFactory', 'hardwareWalletDaemon', 'StellarApi',
-                      function( $scope ,  $rootScope , $window,  $location ,  AuthenticationFactory ,  SettingFactory ,  hardwareWalletDaemon, StellarApi ) {
+myApp.controller('LoginCtrl', ['$scope', '$rootScope', '$window', '$location', 'AuthenticationFactory', 'SettingFactory', 'hardwareWalletDaemon', 'MonoeciApi',
+                      function( $scope ,  $rootScope , $window,  $location ,  AuthenticationFactory ,  SettingFactory ,  hardwareWalletDaemon, MonoeciApi ) {
 
   $scope.ledgerInvalid = true;
   $scope.ledgerError = '';
@@ -45,16 +45,16 @@ myApp.controller('LoginCtrl', ['$scope', '$rootScope', '$window', '$location', '
     });
   }
 
-  $scope.invalidStellarPublickey = true;
+  $scope.invalidMonoeciPublickey = true;
   $scope.$watch('walletAddress', function(newValue){
     if(newValue != '' && newValue != undefined) {
-      if(StellarApi.isValidAddress(newValue)) {
-        $scope.invalidStellarPublickey = false;
+      if(MonoeciApi.isValidAddress(newValue)) {
+        $scope.invalidMonoeciPublickey = false;
       } else {
-        $scope.invalidStellarPublickey = true;
+        $scope.invalidMonoeciPublickey = true;
       }
     } else {
-      $scope.invalidStellarPublickey = true;
+      $scope.invalidMonoeciPublickey = true;
     }
   }, true);
 
@@ -188,7 +188,7 @@ myApp.controller('LoginCtrl', ['$scope', '$rootScope', '$window', '$location', '
   const refresh = async (hardwareWalletDaemon) => {
     const bip44 = SettingFactory.getCurrentNetwork().coin.bip44;
     const knownSupportedBip44s = [
-      148,  // stellar.org
+      148,  // monoeci.org
       // 5248,  // ficnetwork.com, IN PROGRESS. Please follow https://github.com/LedgerHQ/ledgerjs/pull/171/files.
     ]
     if(!knownSupportedBip44s.includes(bip44)) {

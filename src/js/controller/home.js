@@ -2,9 +2,9 @@
 
 myApp.controller("HomeCtrl", ['$scope', '$rootScope', 'RemoteFactory', function( $scope,  $rootScope,  RemoteFactory) {
 
-    RemoteFactory.getStellarTicker(function(err, ticker) {
+    RemoteFactory.getMonoeciTicker(function(err, ticker) {
       if (ticker) {
-        $rootScope.stellar_ticker = ticker;
+        $rootScope.monoeci_ticker = ticker;
         console.log(ticker);
         update();
       }
@@ -33,7 +33,7 @@ myApp.controller("HomeCtrl", ['$scope', '$rootScope', 'RemoteFactory', function(
       $scope.data = [];
 
       $scope.pie.total = 0;
-      $rootScope.stellar_ticker.assets.forEach(function(asset){
+      $rootScope.monoeci_ticker.assets.forEach(function(asset){
         if (asset.code == $rootScope.currentNetwork.coin.code) {
           //$scope.pie.total = asset.volume24h_XLM;
         } else {
@@ -75,7 +75,7 @@ myApp.controller("HomeCtrl", ['$scope', '$rootScope', 'RemoteFactory', function(
       }
     }
 
-    if ($rootScope.stellar_ticker) {
+    if ($rootScope.monoeci_ticker) {
       update();
     }
   }]);

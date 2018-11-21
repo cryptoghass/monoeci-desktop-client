@@ -1,11 +1,11 @@
 /* global myApp */
 
-myApp.factory('StellarGuard', ['SettingFactory', '$http',
+myApp.factory('MonoeciGuard', ['SettingFactory', '$http',
                       function( SettingFactory ,  $http ) {
   const STELLARGUARD_PUBLIC_KEY = 'GCVHEKSRASJBD6O2Z532LWH4N2ZLCBVDLLTLKSYCSMBLOYTNMEEGUARD';
 
   return {
-    hasStellarGuard(account) {
+    hasMonoeciGuard(account) {
       return account.signers.some(function(signer) {
         return signer.public_key === STELLARGUARD_PUBLIC_KEY;
       });
@@ -22,9 +22,9 @@ myApp.factory('StellarGuard', ['SettingFactory', '$http',
     },
 
     _getUrl(path) {
-      let host = 'stellarguard.me';
+      let host = 'monoeciguard.me';
       if(SettingFactory.getNetworkType() !== 'xlm') {
-        host = 'test.stellarguard.me';
+        host = 'test.monoeciguard.me';
       }
 
       return `https://${host}/api/${path}`;

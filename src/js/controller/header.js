@@ -1,6 +1,6 @@
 /* global myApp */
 
-myApp.controller("HeaderCtrl", ['$scope', '$route', '$window', '$rootScope', '$location', 'AuthenticationFactory', 'StellarApi', function( $scope , $route, $window,  $rootScope ,  $location ,  AuthenticationFactory ,  StellarApi ) {
+myApp.controller("HeaderCtrl", ['$scope', '$route', '$window', '$rootScope', '$location', 'AuthenticationFactory', 'MonoeciApi', function( $scope , $route, $window,  $rootScope ,  $location ,  AuthenticationFactory ,  MonoeciApi ) {
 
     $scope.isActive = function(route) {
       return route === $location.path();
@@ -10,7 +10,7 @@ myApp.controller("HeaderCtrl", ['$scope', '$route', '$window', '$rootScope', '$l
     $scope.logout = async () => {
       await AuthenticationFactory.logout();
       $location.path("/login");
-      StellarApi.logout();
+      MonoeciApi.logout();
       $rootScope.reset();
     }
     $scope.reload = function() {

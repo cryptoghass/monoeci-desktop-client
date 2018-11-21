@@ -1,6 +1,6 @@
 /* exported translate_en */
 var translate_en = {
-  header_wellcome : 'Stellar is a platform that connects banks, payments systems, and people.',
+  header_wellcome : 'Monoeci is a platform that connects banks, payments systems, and people.',
   login_desc : 'You can only use a secret key to access an existing account. This is because the desktop client stores your login information locally on your computer, so your account is as safe as the security of your personal computer.',
   open_wallet: 'Open wallet',
   create_wallet: 'Create wallet',
@@ -31,7 +31,7 @@ var translate_en = {
   show_password : 'Show password',
   hide_password : 'Hide password',
   account_address : 'Account address',
-  stellar_address : 'Stellar address',
+  monoeci_address : 'Monoeci address',
   secret_key : 'Secret key and QRCode:',
   show_secret: 'Show secret key',
   hide_secret: 'Hide secret key',
@@ -49,7 +49,7 @@ var translate_en = {
   asset : 'Asset',
   trust_limit : 'Trust Limit',
   add_trust : 'Add trust from known anchors',
-  trust_src : 'This is a list of anchors from the Stellar community.',
+  trust_src : 'This is a list of anchors from the Monoeci community.',
   trust_note: 'Note: We do NOT endorse any of these anchors.',
   trust_remove : 'Remove trust line',
   trust_remove_desc : 'Trust is removable when balance is 0',
@@ -174,7 +174,7 @@ var translate_en = {
 
   /** ICO **/
   ico : 'ICO',
-  ico_stellar : 'Using Stellar for ICOs',
+  ico_monoeci : 'Using Monoeci for ICOs',
   ico_note: 'Note: Before becoming involved in an ICO, cryptocurrency investors and enthusiasts need to consider the risks involved when participating. We do NOT endorse any of these projects.',
   ico_instruction: 'After adding the trust line, select "Trade - Convert". You can use any currency to purchase the ICO.',
 
@@ -193,8 +193,8 @@ var translate_en = {
   public_net : 'Public Network',
   test_net   : 'Test Network',
   other_net  : 'User defined',
-  'Stellar Public Network' : 'Stellar Public Network',
-  'Stellar Test Network' : 'Stellar Test Network',
+  'Monoeci Public Network' : 'Monoeci Public Network',
+  'Monoeci Test Network' : 'Monoeci Test Network',
   'User defined' : 'User defined',
   public_url : 'Public Net URL',
   test_url   : 'Test Net URL',
@@ -228,7 +228,7 @@ var translate_en = {
   domain_done : 'Home Domain was set.',
   manage_data : 'Manage Data',
   data_desc1  : 'Allows you to set,modify or delete a Data Entry (name/value pair) that is attached to a particular account. An account can have an arbitrary amount of DataEntries attached to it. Each DataEntry increases the minimum balance needed to be held by the account.',
-  data_desc2  : 'DataEntries can be used for application specific things. They are not used by the core Stellar protocol.',
+  data_desc2  : 'DataEntries can be used for application specific things. They are not used by the core Monoeci protocol.',
   data_key    : 'Data Entry Name',
   data_value  : 'Data Entry Value',
   data_done   : 'Data entry was set.',
@@ -256,20 +256,20 @@ var translate_en = {
   will_recv : 'Recipient will receive',
   can_send  : 'You can send',
 
-  Stellar : 'Stellar',
-  stellar_desktop_client : 'Foxlet Wallet',
+  Monoeci : 'Monoeci',
+  monoeci_desktop_client : 'Monoeci Wallet',
   app_open_source  : '',
   app_safe_notice  : 'The client stores your login information encrypted locally on your computer. Please backup your secret carefully.',
-  app_feedback     : 'Foxlet is open source now! You can reach us out at GitHub:',
+  app_feedback     : 'Monoeci is open source now! You can reach us out at GitHub:',
   trade_volume : 'Trade Volume',
   wallet : 'Wallet',
   version: 'Version',
   logout : 'Logout',
   new_version_available: 'New version available',
 
-  /** StellarGuard **/
-  stellarguard_submitted: 'Your transaction has been submitted to StellarGuard and is awaiting authorization.',
-  stellarguard_authorize: 'Authorize Transaction',
+  /** MonoeciGuard **/
+  monoeciguard_submitted: 'Your transaction has been submitted to MonoeciGuard and is awaiting authorization.',
+  monoeciguard_authorize: 'Authorize Transaction',
 
   /** FIC Network **/
   ficnetwork: 'FIC ICO',

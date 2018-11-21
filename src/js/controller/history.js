@@ -1,7 +1,7 @@
 /* global myApp */
 
-myApp.controller("PaymentsCtrl", [ '$scope', 'StellarApi', 'FedNameFactory', 'AuthenticationFactory',
-                          function( $scope ,  StellarApi ,  FedNameFactory ,  AuthenticationFactory ) {
+myApp.controller("PaymentsCtrl", [ '$scope', 'MonoeciApi', 'FedNameFactory', 'AuthenticationFactory',
+                          function( $scope ,  MonoeciApi ,  FedNameFactory ,  AuthenticationFactory ) {
     $scope.payments = [];
     $scope.next = undefined;
 
@@ -11,10 +11,10 @@ myApp.controller("PaymentsCtrl", [ '$scope', 'StellarApi', 'FedNameFactory', 'Au
       $scope.next = undefined;
       $scope.loading = true;
 
-      StellarApi.queryPayments(function(err, payments, nextPage){
+      MonoeciApi.queryPayments(function(err, payments, nextPage){
         $scope.loading = false;
         if (err) {
-          $scope.error_msg = StellarApi.getErrMsg(err);
+          $scope.error_msg = MonoeciApi.getErrMsg(err);
         } else {
           $scope.error_msg = "";
           $scope.payments = payments;
@@ -31,7 +31,7 @@ myApp.controller("PaymentsCtrl", [ '$scope', 'StellarApi', 'FedNameFactory', 'Au
     $scope.load_more = function() {
       if ($scope.loading) { return; }
       $scope.loading = true;
-      StellarApi.queryPaymentsNext($scope.next, function(err, payments, nextPage){
+      MonoeciApi.queryPaymentsNext($scope.next, function(err, payments, nextPage){
         $scope.loading = false;
         if (err) {
           $scope.error_msg = err.message;
@@ -101,8 +101,8 @@ myApp.controller("PaymentsCtrl", [ '$scope', 'StellarApi', 'FedNameFactory', 'Au
     };
   } ]);
 
-myApp.controller("TradesCtrl", [ '$scope', 'StellarApi',
-                        function( $scope ,  StellarApi ) {
+myApp.controller("TradesCtrl", [ '$scope', 'MonoeciApi',
+                        function( $scope ,  MonoeciApi ) {
     $scope.trades = [];
     $scope.next = undefined;
 
@@ -113,10 +113,10 @@ myApp.controller("TradesCtrl", [ '$scope', 'StellarApi',
       $scope.trades = [];
       $scope.next = undefined;
 
-      StellarApi.queryTransactions(function(err, trades, nextPage){
+      MonoeciApi.queryTransactions(function(err, trades, nextPage){
         $scope.loading = false;
         if (err) {
-          $scope.error_msg = StellarApi.getErrMsg(err);
+          $scope.error_msg = MonoeciApi.getErrMsg(err);
         } else {
           $scope.error_msg = "";
           trades.forEach(function(item){
@@ -137,7 +137,7 @@ myApp.controller("TradesCtrl", [ '$scope', 'StellarApi',
     $scope.load_more = function() {
       if ($scope.loading) { return; }
       $scope.loading = true;
-      StellarApi.queryTransactionsNext($scope.next, function(err, trades, nextPage){
+      MonoeciApi.queryTransactionsNext($scope.next, function(err, trades, nextPage){
         $scope.loading = false;
         if (err) {
           $scope.error_msg = err.message;
@@ -158,8 +158,8 @@ myApp.controller("TradesCtrl", [ '$scope', 'StellarApi',
     };
   } ]);
 
-myApp.controller("EffectsCtrl", [ '$scope', '$q', 'StellarApi', 'SettingFactory',
-                         function( $scope ,  $q ,  StellarApi ,  SettingFactory ) {
+myApp.controller("EffectsCtrl", [ '$scope', '$q', 'MonoeciApi', 'SettingFactory',
+                         function( $scope ,  $q ,  MonoeciApi ,  SettingFactory ) {
     $scope.effects = [];
     $scope.parsed = {};
     $scope.next = undefined;
@@ -174,10 +174,10 @@ myApp.controller("EffectsCtrl", [ '$scope', '$q', 'StellarApi', 'SettingFactory'
       $scope.parsed = {};
       $scope.next = undefined;
 
-      StellarApi.queryEffects(function(err, effects, nextPage) {
+      MonoeciApi.queryEffects(function(err, effects, nextPage) {
         if (err) {
           $scope.loading = false;
-          $scope.error_msg = StellarApi.getErrMsg(err);
+          $scope.error_msg = MonoeciApi.getErrMsg(err);
         } else {
           $scope.error_msg = "";
           $scope.next = nextPage;
@@ -214,7 +214,7 @@ myApp.controller("EffectsCtrl", [ '$scope', '$q', 'StellarApi', 'SettingFactory'
         return;
       }
       $scope.loading = true;
-      StellarApi.queryEffectsNext($scope.next, function(err, effects, nextPage) {
+      MonoeciApi.queryEffectsNext($scope.next, function(err, effects, nextPage) {
         if (err) {
           $scope.loading = false;
           $scope.error_msg = err.message;

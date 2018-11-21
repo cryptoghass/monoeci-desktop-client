@@ -1,6 +1,6 @@
 /* exported translate_fr */
 var translate_fr = {
-  header_wellcome : 'Stellar est une plateforme de connection pour les institutions, systèmes bancaire, et les individus.',
+  header_wellcome : 'Monoeci est une plateforme de connection pour les institutions, systèmes bancaire, et les individus.',
   login_desc : 'Vous ne pouvez utiliser qu\'une clé secrète pour accéder à un compte existant. Celà est dû au fait que le client de bureau stocke vos informations de connexion localement sur votre ordinateur, de sorte que votre compte soit aussi sûr que la sécurité de votre ordinateur personnel.',
   open_wallet: 'Accéder à un portefeuille',
   create_wallet: 'Créer à un portefeuille',
@@ -29,7 +29,7 @@ var translate_fr = {
   security_notice : 'La clé secrète ci-dessous donne accès à votre argent dans le cas improbable où vous perdriez votre mot de passe. Avec cette clé secrète, tout le monde peut récupérer votre argent. Il est donc très IMPORTANT de la stocker en un lieu PRIVÉ et SÉCURISÉ.',
   show_password : 'Afficher le mot de passe',
   hide_password : 'Cacher le mot de passe',
-  stellar_address : 'Adresse Stellar',
+  monoeci_address : 'Adresse Monoeci',
   secret_key : 'Clé secrète:',
   show_secret: 'Afficher la clé secrète',
   hide_secret: 'Cacher la clé secrète',
@@ -47,7 +47,7 @@ var translate_fr = {
   asset : 'Avoir/Asset',
   trust_limit : 'Limitation de dépôt',
   add_trust : 'Ajouter un dépôt de confiance à partir d\'une ancres connues',
-  trust_src : 'Ceci une liste d\'ancres de la communauté Stellar.',
+  trust_src : 'Ceci une liste d\'ancres de la communauté Monoeci.',
   trust_note: 'Note: Nous ne cautionnons aucune de ces ancres.',
   trust_remove : 'Supprimer la ligne de confiance',
   trust_remove_desc : 'Le dépôt est retirable lorsque le solde est à 0',
@@ -172,7 +172,7 @@ var translate_fr = {
 
   /** ICO **/
   ico : 'ICO',
-  ico_stellar : 'Utilisation de Stellar pour les ICOs',
+  ico_monoeci : 'Utilisation de Monoeci pour les ICOs',
   ico_note: 'Remarque: Avant de s\'impliquer dans une OIC, les investisseurs et les amateurs de crypto-monnaie doivent prendre en compte les risques encourus lorsqu\'ils y participent. Nous ne cautionnons aucuns de ces projets.',
   ico_instruction: 'Après avoir ajouté la ligne de confiance, sélectionnez "Transaction - Convertir". Vous pouvez utiliser n\'importe quelle devise pour participer à une ICO.',
 
@@ -180,14 +180,14 @@ var translate_fr = {
   settings : 'Préférences',
   network  : 'Réseau',
   proxy    : 'Proxy',
-  selected_net    : 'Réseau Stellar sélectionné',
-  switch_net      : 'Réseau Stellar',
+  selected_net    : 'Réseau Monoeci sélectionné',
+  switch_net      : 'Réseau Monoeci',
   switch_net_desc : 'Comme son nom l\'indique le testnet est un réseau de test. Il est parfois réinitialisé, donc ne vous attachez pas aux soldes ou comptes que vous avez sur lui.',
   public_net : 'Réseau Public',
   test_net   : 'Réseau de Test',
   other_net  : 'Défini par l\'utilisateur',
-  'Stellar Public Network' : 'Réseau Public',
-  'Stellar Test Network' : 'Réseau de Test',
+  'Monoeci Public Network' : 'Réseau Public',
+  'Monoeci Test Network' : 'Réseau de Test',
   'User defined' : 'Défini par l\'utilisateur',
   public_url : 'URL réseau public',
   test_url   : 'URL réseau test',
@@ -221,7 +221,7 @@ var translate_fr = {
   domain_done : 'Le domaine résident a été configuré',
   manage_data : 'Gerer les données',
   data_desc1  : 'Vous permet de définir, modifier ou supprimer une saisie de données (paire nom/valeur) attachée à un compte particulier. Un compte peut avoir une quantité arbitraire de saisies de données attachée à lui même. Chaque données augmente le solde minimum requis pour être détenu par le compte.',
-  data_desc2  : 'Les saisies de données peuvent être utilisées pour des choses spécifiques à l\'application. Ils ne sont pas utilisés par le protocole Stellar de base.',
+  data_desc2  : 'Les saisies de données peuvent être utilisées pour des choses spécifiques à l\'application. Ils ne sont pas utilisés par le protocole Monoeci de base.',
   data_key    : 'Nom Saisie de Données',
   data_value  : 'Valeur Saisie de Données',
   data_done   : 'La Saisie de Données a été configurée',
@@ -249,10 +249,10 @@ var translate_fr = {
   will_recv : 'Le destinataire recevra',
   can_send  : 'Vous pouvez envoyer',
 
-  Stellar : 'Stellar',
-  stellar_desktop_client : 'Foxlet Wallet',
+  Monoeci : 'Monoeci',
+  monoeci_desktop_client : 'Monoeci Wallet',
   app_open_source  : 'Cette application est Open Source',
-  app_safe_notice  : 'Stellar Desktop Client stocke vos informations de connexion localement sur votre ordinateur. Soyez vigilant, sauvegarder votre secret avec soin.',
+  app_safe_notice  : 'Monoeci Desktop Client stocke vos informations de connexion localement sur votre ordinateur. Soyez vigilant, sauvegarder votre secret avec soin.',
   app_feedback     : 'Vous pouvez soumettre toutes issues ou bugs sur la page Github',
   trade_volume : 'Volume d\'échange',
   wallet : 'Portefeuille',
@@ -260,9 +260,9 @@ var translate_fr = {
   logout : 'Se déconnecter',
   new_version_available: 'Nouvelle version disponible',
 
-  /** StellarGuard **/
-  stellarguard_submitted: 'Votre transaction a été soumise à StellarGuard et est en attente d\'autorisation.',
-  stellarguard_authorize: 'Autoriser la transaction',
+  /** MonoeciGuard **/
+  monoeciguard_submitted: 'Votre transaction a été soumise à MonoeciGuard et est en attente d\'autorisation.',
+  monoeciguard_authorize: 'Autoriser la transaction',
 
   /** Error **/
   NotFoundError : 'La ressource n\'a pas été trouvée. Vous devez avoir au moins 1 {{name}} dans votre compte pour qu\'il soit actif! Chaque ligne de confiance ou offre nécessite une réserve de 0.5 {{name}}s suplémentaires. Pour faciliter les choses, envoyez au moins 3 {{name}}s au compte.',

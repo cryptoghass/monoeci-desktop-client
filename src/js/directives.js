@@ -1,4 +1,4 @@
-/* global myApp, StellarSdk */
+/* global myApp, MonoeciSdk */
 
 myApp.directive('gateway', [ function() {
   return {
@@ -161,7 +161,7 @@ myApp.directive('masterKey', function() {
 
       var validator = function(value) {
         try{
-          StellarSdk.Keypair.fromSecret(value);
+          MonoeciSdk.Keypair.fromSecret(value);
         } catch(e) {
           ctrl.$setValidity('masterKey', false);
           return value;
@@ -328,8 +328,8 @@ myApp.directive('strongPassword', function () {
   };
 });
 
-myApp.component('stellarguardResult', {
-  templateUrl: 'directive/stellarguard-result.html',
+myApp.component('monoeciguardResult', {
+  templateUrl: 'directive/monoeciguard-result.html',
   bindings: {
     result: '<'
   }

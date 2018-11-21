@@ -146,8 +146,8 @@ myApp.config(function($routeProvider, $httpProvider, $translateProvider, $compil
   });
 });
 
-myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFactory', 'StellarApi', 'SettingFactory', 'RemoteFactory', 'AnchorFactory',
-  function($rootScope, $window, $location, $translate, AuthenticationFactory, StellarApi, SettingFactory, RemoteFactory, AnchorFactory) {
+myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFactory', 'MonoeciApi', 'SettingFactory', 'RemoteFactory', 'AnchorFactory',
+  function($rootScope, $window, $location, $translate, AuthenticationFactory, MonoeciApi, SettingFactory, RemoteFactory, AnchorFactory) {
 
     $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
       if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isInSession) {
@@ -155,7 +155,7 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       } else {
         if (currentRoute && currentRoute.originalPath == '/trade') {
           console.log('Leave trade page');
-          StellarApi.closeOrderbook();
+          MonoeciApi.closeOrderbook();
         }
         if (currentRoute && currentRoute.originalPath == '/send') {
           console.log('Leave send page');
@@ -175,7 +175,7 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       $rootScope.notFunded = true;
       (async () => {
         try {
-          const isFunded = await StellarApi._isFunded($rootScope.address);
+          const isFunded = await MonoeciApi._isFunded($rootScope.address);
           $rootScope.notFunded = !isFunded;
           $rootScope.$apply();
         } catch (e) {
@@ -193,8 +193,8 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
         $rootScope.address = AuthenticationFactory.address;
         $rootScope.contacts = AuthenticationFactory.contacts;
         $rootScope.resolveFed();
-        StellarApi.listenStream();
-        StellarApi.queryAccount();
+        MonoeciApi.listenStream();
+        MonoeciApi.queryAccount();
       } else {
         delete $rootScope.address;
         delete $rootScope.contacts;
@@ -217,7 +217,7 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       }
     }
     $rootScope.resolveFed = function() {
-      StellarApi.getFedName(SettingFactory.getFedNetwork(), $rootScope.address, function(err, name){
+      MonoeciApi.getFedName(SettingFactory.getFedNetwork(), $rootScope.address, function(err, name){
         if (err) {
           console.error(err);
         } else {
@@ -249,9 +249,9 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       AnchorFactory.addAnchor(domain);
     }
 
-    $rootScope.stellar_ticker;
-    RemoteFactory.getStellarTicker(function(err, ticker){
-      if (ticker) { $rootScope.stellar_ticker = ticker; }
+    $rootScope.monoeci_ticker;
+    RemoteFactory.getMonoeciTicker(function(err, ticker){
+      if (ticker) { $rootScope.monoeci_ticker = ticker; }
     });
 
     reset();
@@ -282,11 +282,11 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       return Object.keys(obj).length;
     }
     $rootScope.isValidAddress = function(address) {
-      return StellarApi.isValidAddress(address);
+      return MonoeciApi.isValidAddress(address);
     }
     $rootScope.currentNetwork = SettingFactory.getCurrentNetwork();
     $rootScope.isPublicNetwork = function() {
-      return this.currentNetwork.name == "Stellar Public Network";
+      return this.currentNetwork.name == "Monoeci Public Network";
     }
 
     $rootScope.isLangCN = function() {
@@ -295,12 +295,12 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
 
     $translate.use(SettingFactory.getLang());
     try {
-      StellarApi.setServer(SettingFactory.getStellarUrl(), SettingFactory.getNetPassphrase(), SettingFactory.getAllowHttp());
+      MonoeciApi.setServer(SettingFactory.getMonoeciUrl(), SettingFactory.getNetPassphrase(), SettingFactory.getAllowHttp());
     } catch(e) {
-      console.error("Cannot set server", SettingFactory.getStellarUrl(), SettingFactory.getNetworkType(), e);
+      console.error("Cannot set server", SettingFactory.getMonoeciUrl(), SettingFactory.getNetworkType(), e);
       console.warn("Change network back to xlm.");
       SettingFactory.setNetworkType('xlm');
-      StellarApi.setServer(null);
+      MonoeciApi.setServer(null);
     }
 
     if (SettingFactory.getProxy()) {

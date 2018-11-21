@@ -1,13 +1,13 @@
 {
-  "name": "foxlet",
+  "name": "monoeci",
   "version": "5.0.0-alpha",
-  "productName": "Foxlet",
-  "description": "Stellar desktop client",
+  "productName": "Monoeci wallet",
+  "description": "Monoeci Desktop Wallet",
   "main": "main.js",
-  "homepage": "https://wallet.stellar.chat/",
+  "homepage": "https://monoeci.io/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/stellarchat/desktop-client.git"
+    "url": "https://github.com/monoeci-monaco/monoeci-desktop-client.git"
   },
   "author": {
     "name": "stellarchat",
@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "keywords": [
-    "stellar",
+    "monoeci",
     "wallet",
     "electron",
     "angularjs"

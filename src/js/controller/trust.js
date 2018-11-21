@@ -1,7 +1,7 @@
-/* global $, myApp, StellarSdk */
+/* global $, myApp, MonoeciSdk */
 
-myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'StellarApi',
-                      function( $scope ,  $rootScope ,  StellarApi ) {
+myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'MonoeciApi',
+                      function( $scope ,  $rootScope ,  MonoeciApi ) {
     $scope.manual_code;
     $scope.manual_issuer;
     $scope.manual_logo = $rootScope.gateways.getSourceById($scope.manual_issuer).logo;
@@ -21,7 +21,7 @@ myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'StellarApi',
       $scope.fed_error = false;
       $scope.fed_loading = true;
       try {
-        const res = await StellarApi.federation($scope.fed_url)
+        const res = await MonoeciApi.federation($scope.fed_url)
         $scope.fed_error = false;
         $scope.fed_loading = false;
         $scope.fed_currencies = res.CURRENCIES;
@@ -75,7 +75,7 @@ myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'StellarApi',
       issuer = issuer || $scope.manual_issuer;
       amount = amount || "100000000000";
       try{
-        new StellarSdk.Asset(code, issuer);
+        new MonoeciSdk.Asset(code, issuer);
       } catch(e) {
         $scope.trust_error = e.message;
         return;
@@ -97,7 +97,7 @@ myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'StellarApi',
       $scope.trust_done = false;
       try {
         // 2. Get Te
-        const te = await StellarApi.changeTrust(code, issuer, amount);
+        const te = await MonoeciApi.changeTrust(code, issuer, amount);
 
         // 3. Pass te to signModal, wait for response and then close it.
         $scope.te = te;
@@ -110,14 +110,14 @@ myApp.controller("TrustCtrl", ['$scope', '$rootScope', 'StellarApi',
           });
 
         // 4. Submit teSigned
-        await StellarApi.submitTransaction(teSigned);
+        await MonoeciApi.submitTransaction(teSigned);
 
         // 5a. Show success.
         $scope.trust_done = true;
       } catch(err) {
         // 5b. Show error.
         console.error(err)
-          $scope.trust_error = StellarApi.getErrMsg(err);
+          $scope.trust_error = MonoeciApi.getErrMsg(err);
       } finally {
         // 6. Stop spinner.
         $scope.setChanging(code, issuer, false);
