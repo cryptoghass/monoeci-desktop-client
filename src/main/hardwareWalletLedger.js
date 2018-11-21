@@ -4,7 +4,7 @@ module.exports = (()=>{
 
   const { default: Transport } = require("@ledgerhq/hw-transport-node-hid");
   const { default: Str } = require("@ledgerhq/hw-app-str");
-  const { Keypair, xdr } = require("monoeci-sdk");
+  const { Keypair, xdr } = require("stellar-sdk");
   const BigNumber = require('bignumber.js')
   const {sha256} = require("sha.js");
 

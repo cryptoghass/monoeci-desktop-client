@@ -1,4 +1,4 @@
-/* global ipcRenderer, module, moment, MonoeciSdk */
+/* global ipcRenderer, module, moment, StellarSDK */
 
 const invokeIPC = (channel, ...args) => {
   const _id = Math.floor(Math.random()*10000);
@@ -20,7 +20,7 @@ const toContactV1 = (contactV2) => {
     view    : contactV2.federation || contactV2.address,
     address : contactV2.address,
   }
-  if(contactV2.defaultMemoType !== MonoeciSdk.Memo.MemoNone) {
+  if(contactV2.defaultMemoType !== StellarSDK.Memo.MemoNone) {
     contactV1.memotype = contactV2.defaultMemoType;
     contactV1.memo = contactV2.defaultMemoValue;
   }
@@ -34,7 +34,7 @@ const toContactV2 = (contactV1) => ({
   details          : '',
   created          : moment().format(),
   updated          : moment().format(),
-  defaultMemoType  : contactV1.memotype || MonoeciSdk.Memo.MemoNone,
+  defaultMemoType  : contactV1.memotype || StellarSDK.Memo.MemoNone,
   defaultMemoValue : contactV1.memo,
 })
 

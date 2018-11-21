@@ -1,4 +1,4 @@
-/* global _, myApp, round, MonoeciSdk */
+/* global _, myApp, round, StellarSDK */
 
 myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook', 'MonoeciPath', 'AuthenticationFactory', 'MonoeciGuard',
                     function( $rootScope ,  MonoeciHistory ,  MonoeciOrderbook ,  MonoeciPath ,  AuthenticationFactory ,  MonoeciGuard ) {
@@ -18,7 +18,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         issuer = code.issuer;
         code = code.code;
       }
-      return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
+      return code == $rootScope.currentNetwork.coin.code ? new StellarSDK.Asset.native() : new StellarSDK.Asset(code, issuer);
     }
 
 
@@ -58,38 +58,38 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = MonoeciSdk.Operation.createAccount({
+        const payment = StellarSDK.Operation.createAccount({
           destination: target,
           startingBalance: amount.toString()
         });
-        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
-        return new MonoeciSdk.TransactionBuilder(account, {memo}).addOperation(payment).build();
+        const memo = new StellarSDK.Memo(memo_type, memo_value);
+        return new StellarSDK.TransactionBuilder(account, {memo}).addOperation(payment).build();
       },
 
       async _sendCoin(target, amount, memo_type, memo_value) {
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = MonoeciSdk.Operation.payment({
+        const payment = StellarSDK.Operation.payment({
           destination: target,
-          asset: MonoeciSdk.Asset.native(),
+          asset: StellarSDK.Asset.native(),
           amount: amount.toString()
         });
-        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
-        return new MonoeciSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
+        const memo = new StellarSDK.Memo(memo_type, memo_value);
+        return new StellarSDK.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
       },
 
       async _sendToken(target, currency, issuer, amount, memo_type, memo_value) {
         amount = round(amount, 7);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const payment = MonoeciSdk.Operation.payment({
+        const payment = StellarSDK.Operation.payment({
           destination: target,
-          asset: new MonoeciSdk.Asset(currency, issuer),
+          asset: new StellarSDK.Asset(currency, issuer),
           amount: amount.toString()
         });
-        const memo = new MonoeciSdk.Memo(memo_type, memo_value);
-        return new MonoeciSdk.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
+        const memo = new StellarSDK.Memo(memo_type, memo_value);
+        return new StellarSDK.TransactionBuilder(account, {memo:memo}).addOperation(payment).build();
       },
 
       _updateRootBalance(balances = _balances) {
@@ -123,13 +123,13 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         console.debug('Sell', amount, selling.code, 'for', buying.code, '@', price);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.manageOffer({
+        const op = StellarSDK.Operation.manageOffer({
           selling: selling,
           buying: buying,
           amount: amount.toString(),
           price : price.toString()
         });
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       _closeStream() {
@@ -167,18 +167,18 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
       },
 
       isValidAddress(address) {
-        return MonoeciSdk.StrKey.isValidEd25519PublicKey(address);
+        return StellarSDK.StrKey.isValidEd25519PublicKey(address);
       },
 
       federation(fed_url) {
-        return MonoeciSdk.MonoeciTomlResolver.resolve(fed_url);
+        return StellarSDK.MonoeciTomlResolver.resolve(fed_url);
       },
 
       setServer(url, passphrase, allowHttp=false) {
         if(!url) throw new Error('No URL')
         console.debug("Use Network: " + url + ', Passphrase: ' + passphrase);
-        MonoeciSdk.Network.use(new MonoeciSdk.Network(passphrase));
-        _server = new MonoeciSdk.Server(url, {allowHttp});
+        StellarSDK.Network.use(new StellarSDK.Network(passphrase));
+        _server = new StellarSDK.Server(url, {allowHttp});
         MonoeciHistory.setServer(_server);
         MonoeciOrderbook.setServer(_server);
         MonoeciPath.setServer(_server);
@@ -186,7 +186,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
 
       isValidMemo(type, memo) {
         try {
-          new MonoeciSdk.Memo(type, memo);
+          new StellarSDK.Memo(type, memo);
           return '';
         } catch (e) {
           return e.message;
@@ -212,9 +212,9 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         console.debug(alt.origin.source_amount + '/' + alt.src_code + ' -> ' + alt.origin.destination_amount + '/' + alt.dst_code);
         const path = alt.origin.path.map((item) => {
           if (item.asset_type == 'native') {
-            return new MonoeciSdk.Asset.native();
+            return new StellarSDK.Asset.native();
           } else {
-            return new MonoeciSdk.Asset(item.asset_code, item.asset_issuer);
+            return new StellarSDK.Asset(item.asset_code, item.asset_issuer);
           }
         });
         let sendMax = alt.origin.source_amount;
@@ -223,7 +223,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         }
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const pathPayment = MonoeciSdk.Operation.pathPayment({
+        const pathPayment = StellarSDK.Operation.pathPayment({
           destination: this.address,
           sendAsset  : getAsset(alt.src_code, alt.src_issuer),
           sendMax    : sendMax,
@@ -231,7 +231,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
           destAmount : alt.origin.destination_amount,
           path       : path
         });
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(pathPayment).build();
+        return new StellarSDK.TransactionBuilder(account).addOperation(pathPayment).build();
       },
 
       listenStream() {
@@ -282,15 +282,15 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
       },
 
       async changeTrust(code, issuer, limit) {
-        const asset = new MonoeciSdk.Asset(code, issuer);
+        const asset = new StellarSDK.Asset(code, issuer);
         console.debug('Turst asset', asset, limit);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.changeTrust({
+        const op = StellarSDK.Operation.changeTrust({
           asset: asset,
           limit: limit.toString()
         });
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       async setOption(name, value) {
@@ -299,8 +299,8 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         console.debug('set option:', name, '-', value);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.setOptions(opt);
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = StellarSDK.Operation.setOptions(opt);
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       async setData(name, value) {
@@ -308,8 +308,8 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         console.debug('manageData:', name, '-', value);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.manageData(opt);
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = StellarSDK.Operation.manageData(opt);
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       async merge(destAccount) {
@@ -317,8 +317,8 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         console.debug('merge:', this.address, '->', destAccount);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.accountMerge(opt);
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        const op = StellarSDK.Operation.accountMerge(opt);
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       queryAccount(callback) {
@@ -431,22 +431,22 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
           price   = round(offer.price, 7);
           offer_id = offer.id;
         } else {
-          selling = MonoeciSdk.Asset.native();
-          buying  = new MonoeciSdk.Asset('DUMMY', this.address);
+          selling = StellarSDK.Asset.native();
+          buying  = new StellarSDK.Asset('DUMMY', this.address);
           price   = "1";
           offer_id = offer;
         }
         console.debug('Cancel Offer', offer_id);
         const account = await _server.loadAccount(this.address)
         this._updateSeq(account);
-        const op = MonoeciSdk.Operation.manageOffer({
+        const op = StellarSDK.Operation.manageOffer({
           selling: selling,
           buying: buying,
           amount: "0",
           price : price,
           offerId : offer_id
         });
-        return new MonoeciSdk.TransactionBuilder(account).addOperation(op).build();
+        return new StellarSDK.TransactionBuilder(account).addOperation(op).build();
       },
 
       async _submitTransaction(transaction, account) {
@@ -460,7 +460,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
 
       async getFedName(domain, address) {
         try {
-          const server = await MonoeciSdk.FederationServer.createForDomain(domain);
+          const server = await StellarSDK.FederationServer.createForDomain(domain);
           const data = await server.resolveAccountId(address);
           if(data.monoeci_address) {
             const index = data.monoeci_address.indexOf("*");
@@ -477,7 +477,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
         if (err.name == "NotFoundError") {
           message = "NotFoundError";
         } else if (err.data && err.data.extras && err.data.extras.result_xdr) {
-          const resultXdr = MonoeciSdk.xdr.TransactionResult.fromXDR(err.data.extras.result_xdr, 'base64');
+          const resultXdr = StellarSDK.xdr.TransactionResult.fromXDR(err.data.extras.result_xdr, 'base64');
           if (resultXdr.result().results()) {
             message = resultXdr.result().results()[0].value().value().switch().name;
           } else {

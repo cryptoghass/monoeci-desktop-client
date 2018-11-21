@@ -1,4 +1,4 @@
-/* global $, Buffer, CONST, myApp, MonoeciSdk */
+/* global $, Buffer, CONST, myApp, StellarSDK */
 myApp.controller('signModalCtrl', ['$rootScope', '$scope', 'AuthenticationFactory', '$element', '$timeout', 'hardwareWalletDaemon',
                           function( $rootScope ,  $scope ,  AuthenticationFactory ,  $element ,  $timeout ,  hardwareWalletDaemon ) {
 
@@ -34,7 +34,7 @@ myApp.controller('signModalCtrl', ['$rootScope', '$scope', 'AuthenticationFactor
 
   /** START: Plain secret sign **/
   $scope.$watch('plainSecret', () => {
-    if(MonoeciSdk.StrKey.isValidEd25519SecretSeed($scope.plainSecret)) {
+    if(StellarSDK.StrKey.isValidEd25519SecretSeed($scope.plainSecret)) {
       $scope.plainError = '';
       $('.plainSecretSign').removeAttr("disabled");
     } else {
@@ -86,13 +86,13 @@ myApp.controller('signModalCtrl', ['$rootScope', '$scope', 'AuthenticationFactor
       throw e;
     }
     try {
-      parsedSignatures = parsedSignatureXDRs.map((sig)=>MonoeciSdk.xdr.DecoratedSignature.fromXDR(Buffer.from(sig, 'base64')))
+      parsedSignatures = parsedSignatureXDRs.map((sig)=>StellarSDK.xdr.DecoratedSignature.fromXDR(Buffer.from(sig, 'base64')))
     } catch(e) {
       // TODO display error
       throw e;
     }
-    const myKP = MonoeciSdk.Keypair.fromPublicKey($rootScope.address)
-    const isOk = parsedSignatures.every((sig)=>MonoeciSdk.verify($scope.te.hash(), sig.signature(), myKP.rawPublicKey()));
+    const myKP = StellarSDK.Keypair.fromPublicKey($rootScope.address)
+    const isOk = parsedSignatures.every((sig)=>StellarSDK.verify($scope.te.hash(), sig.signature(), myKP.rawPublicKey()));
 
     if(isOk) {
       $scope.signatureInvalid = false;
@@ -127,12 +127,12 @@ myApp.controller('signModalCtrl', ['$rootScope', '$scope', 'AuthenticationFactor
 
     // Otherwise, calc printable information
     $scope.teXDR = $scope.te.toEnvelope().toXDR().toString('base64');
-    const teBare = new MonoeciSdk.Transaction($scope.teXDR);
+    const teBare = new StellarSDK.Transaction($scope.teXDR);
     teBare.signatures = [];
     const allSigners = AuthenticationFactory.requiredSigners(teBare, thresholds);
     $scope.signedSigners = allSigners
-      .map((signerPK) => MonoeciSdk.Keypair.fromPublicKey(signerPK))
-      .filter((signerKP) => $scope.te.signatures.some((sig)=>MonoeciSdk.verify($scope.te.hash(), sig.signature(), signerKP.rawPublicKey())))
+      .map((signerPK) => StellarSDK.Keypair.fromPublicKey(signerPK))
+      .filter((signerKP) => $scope.te.signatures.some((sig)=>StellarSDK.verify($scope.te.hash(), sig.signature(), signerKP.rawPublicKey())))
       .map((signerKP) => signerKP.publicKey())
 
     // Apply changes

@@ -1,4 +1,4 @@
-/* global _, myApp, round, MonoeciSdk */
+/* global _, myApp, round, StellarSDK */
 
 myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFactory',
                       function( $scope ,  $rootScope ,  MonoeciApi ,  SettingFactory ) {
@@ -377,7 +377,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFac
         issuer = code.issuer;
         code = code.code;
       }
-      return code == $rootScope.currentNetwork.coin.code ? new MonoeciSdk.Asset.native() : new MonoeciSdk.Asset(code, issuer);
+      return code == $rootScope.currentNetwork.coin.code ? new StellarSDK.Asset.native() : new StellarSDK.Asset(code, issuer);
     }
 
     function validPair(code, issuer) {
@@ -385,7 +385,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFac
         return true;
       }
       try {
-        new MonoeciSdk.Asset(code, issuer);
+        new StellarSDK.Asset(code, issuer);
         return true;
       } catch(e) {
         return false;

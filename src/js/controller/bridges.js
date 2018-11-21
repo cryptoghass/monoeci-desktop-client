@@ -1,4 +1,4 @@
-/* global myApp, MonoeciSdk */
+/* global myApp, StellarSDK */
 
 myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'AnchorFactory', 'MonoeciApi', '$http',
                         function( $scope ,  $rootScope ,  SettingFactory ,  AnchorFactory ,  MonoeciApi ,  $http ) {
@@ -36,12 +36,12 @@ myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Anch
     $scope.resolve = function(){
       $scope.fed_url = "";
       $scope.fed = undefined;
-      MonoeciSdk.MonoeciTomlResolver.resolve($scope.anchor_name).then(function(monoeciToml) {
+      StellarSDK.MonoeciTomlResolver.resolve($scope.anchor_name).then(function(monoeciToml) {
         console.debug(monoeciToml);
         var currencies = monoeciToml.CURRENCIES;
         var deposit_api = monoeciToml.DEPOSIT_SERVER;
         $scope.fed_url = monoeciToml.FEDERATION_SERVER;
-        $scope.fed = new MonoeciSdk.FederationServer(monoeciToml.FEDERATION_SERVER, $scope.anchor_name, {});
+        $scope.fed = new StellarSDK.FederationServer(monoeciToml.FEDERATION_SERVER, $scope.anchor_name, {});
         if (!deposit_api) { return; }
         currencies.forEach(function(asset){
           if (asset.host && asset.host.indexOf($scope.anchor_name) < 0) {

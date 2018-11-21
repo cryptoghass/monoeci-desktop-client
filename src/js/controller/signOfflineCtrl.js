@@ -1,4 +1,4 @@
-/* global $, myApp, MonoeciSdk */
+/* global $, myApp, StellarSDK */
 
 myApp.controller('signOfflineCtrl', ['$scope', 'AuthenticationFactory',
                             function( $scope ,  AuthenticationFactory ) {
@@ -20,7 +20,7 @@ myApp.controller('signOfflineCtrl', ['$scope', 'AuthenticationFactory',
     try {
       // await startSpinner();
       try {
-        $scope.te = new MonoeciSdk.Transaction(newValue)
+        $scope.te = new StellarSDK.Transaction(newValue)
       } catch(e) {
         throw new Error('XDR not valid')
       }
@@ -30,8 +30,8 @@ myApp.controller('signOfflineCtrl', ['$scope', 'AuthenticationFactory',
         .some((signerPK)=>signerPK===$scope.address)  // TODO: PK != address
       if(!tf) throw $scope.signingError = "You can't sign this transaction";
 
-      const signerKP = MonoeciSdk.Keypair.fromPublicKey($scope.address)
-      const alreadySigned = $scope.te.signatures.some((sig)=> MonoeciSdk.verify($scope.te.hash(), sig.signature(), signerKP.rawPublicKey()))
+      const signerKP = StellarSDK.Keypair.fromPublicKey($scope.address)
+      const alreadySigned = $scope.te.signatures.some((sig)=> StellarSDK.verify($scope.te.hash(), sig.signature(), signerKP.rawPublicKey()))
       if(alreadySigned) throw $scope.signingError = "You have already signed this transaction";
 
       // all good

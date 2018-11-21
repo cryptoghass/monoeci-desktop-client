@@ -1,4 +1,4 @@
-/* global myApp, MonoeciSdk */
+/* global myApp, StellarSDK */
 
 myApp.directive('gateway', [ function() {
   return {
@@ -161,7 +161,7 @@ myApp.directive('masterKey', function() {
 
       var validator = function(value) {
         try{
-          MonoeciSdk.Keypair.fromSecret(value);
+          StellarSDK.Keypair.fromSecret(value);
         } catch(e) {
           ctrl.$setValidity('masterKey', false);
           return value;

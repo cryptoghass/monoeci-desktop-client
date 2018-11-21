@@ -52,7 +52,7 @@
     "qrcode-generator": "^1.4.0",
     "scryptsy": "^2.0.0",
     "sjcl": "^1.0.7",
-    "monoeci-sdk": "stellar/js-stellar-sdk",
+    "stellar-sdk": "^0.8.2",
     "underscore": "^1.9.1",
     "uuid": "^3.3.2",
     "zxcvbn": "^4.4.2"

@@ -1,4 +1,4 @@
-/* global myApp, require, MonoeciSdk, zxcvbn */
+/* global myApp, require, StellarSDK, zxcvbn */
 
 myApp.controller('RegisterCtrl', ['$scope', '$location', 'AuthenticationFactory',
                          function( $scope ,  $location ,  AuthenticationFactory ) {
@@ -70,7 +70,7 @@ myApp.controller('RegisterCtrl', ['$scope', '$location', 'AuthenticationFactory'
     };
 
     const getWalletFilename = (secret, timestamp) => {
-      const address = MonoeciSdk.Keypair.fromSecret(secret).publicKey()
+      const address = StellarSDK.Keypair.fromSecret(secret).publicKey()
       var ts = timestamp ? new Date(timestamp) : new Date()
 
       return [
@@ -85,7 +85,7 @@ myApp.controller('RegisterCtrl', ['$scope', '$location', 'AuthenticationFactory'
     }
 
     $scope.fileInputClick = () => {
-      if(!$scope.secret) $scope.secret = MonoeciSdk.Keypair.random().secret();
+      if(!$scope.secret) $scope.secret = StellarSDK.Keypair.random().secret();
       const remote = require('electron').remote;
       var dialog = remote.dialog;
 
@@ -107,10 +107,10 @@ myApp.controller('RegisterCtrl', ['$scope', '$location', 'AuthenticationFactory'
     };
 
     $scope.submitForm = async () => {
-      if(!$scope.secret) $scope.secret = MonoeciSdk.Keypair.random().secret();
+      if(!$scope.secret) $scope.secret = StellarSDK.Keypair.random().secret();
 
       const options = {
-        address: MonoeciSdk.Keypair.fromSecret($scope.secret).publicKey(),  // ignored until blob format v2.
+        address: StellarSDK.Keypair.fromSecret($scope.secret).publicKey(),  // ignored until blob format v2.
         secrets: [$scope.secret],  // TODO: blob format v2 to handle multiple secrets (and other things in upcoming commits).
         password: $scope.password1,
         path: $scope.walletfile

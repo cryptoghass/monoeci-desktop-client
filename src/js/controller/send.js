@@ -1,14 +1,14 @@
-/* global $, myApp, MonoeciSdk, ripple */
+/* global $, myApp, StellarSDK, ripple */
 
 myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'MonoeciApi', 'SettingFactory', 'AuthenticationFactory', '$http',
                      function( $scope ,  $rootScope ,  $routeParams ,  MonoeciApi ,  SettingFactory ,  AuthenticationFactory ,  $http ) {
     console.log('Send to', $routeParams);
 
-    $scope.MemoNone = MonoeciSdk.MemoNone;
-    $scope.MemoID = MonoeciSdk.MemoID;
-    $scope.MemoText = MonoeciSdk.MemoText;
-    $scope.MemoHash = MonoeciSdk.MemoHash;
-    $scope.MemoReturn = MonoeciSdk.MemoReturn;  // effectively equals MemoHash, thus skipped.
+    $scope.MemoNone = StellarSDK.MemoNone;
+    $scope.MemoID = StellarSDK.MemoID;
+    $scope.MemoText = StellarSDK.MemoText;
+    $scope.MemoHash = StellarSDK.MemoHash;
+    $scope.MemoReturn = StellarSDK.MemoReturn;  // effectively equals MemoHash, thus skipped.
 
     $scope.asset = {};
     $scope.input_address;
@@ -148,9 +148,9 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'MonoeciAp
       $scope.target_domain = domain;
       $scope.act_loading = true;
 
-      MonoeciSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+      StellarSDK.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
         $scope.fed_url = monoeciToml.FEDERATION_SERVER;
-        var server = new MonoeciSdk.FederationServer(monoeciToml.FEDERATION_SERVER, domain, {});
+        var server = new StellarSDK.FederationServer(monoeciToml.FEDERATION_SERVER, domain, {});
         server.resolveAddress(prestr).then(function(data){
           console.debug(prestr, data);
           $scope.act_loading = false;
