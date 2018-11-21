@@ -68,14 +68,14 @@
 				</div>
 			</div>
 
-			<div ng-if="currentNetwork.coin.code == 'XLM'">
+			<div ng-if="currentNetwork.coin.code == 'XMCC'">
 				<label translate="inflation_options">Other options</label>
 				<p class="hint" translate="inflation_options_desc">You can join one of the following inflation pools.</p>
 
 				<div class="row" style="margin-bottom: 20px;">
 					<div class="col-xs-6 col-sm-4">
 						<a href class="btn btn-info btn-block btn-big" ng-disabled="inflation_working"
-						   ng-click="setInflationXLMPool()" translate="inflation_xlmpool">Vote to xlmpool.com/</a>
+						   ng-click="setInflationXMCCPool()" translate="inflation_xmccpool">Vote to xmccpool.com/</a>
 					</div>
 					<div class="col-xs-6 col-sm-4">
 						<a href class="btn btn-info btn-block btn-big" ng-disabled="inflation_working" ng-click="setInflationMoonPool()" translate="inflation_moonpool">Vote to MoonPool</a>
@@ -163,7 +163,7 @@
 
 		<div class="col-sm-9" ng-show="isMode('merge')">
 			<label translate="important">Important:</label>
-			<p class="hint" translate="merge_desc" translate-values="currentNetwork.coin">Danger operation! It transfers the native balance (the amount of XLM an account holds) to another account and removes the source account from the ledger.</p>
+			<p class="hint" translate="merge_desc" translate-values="currentNetwork.coin">Danger operation! It transfers the native balance (the amount of XMCC an account holds) to another account and removes the source account from the ledger.</p>
 
 			<div class="row" style="margin-bottom: 20px;">
 				<div class="col-xs-12 col-md-10">

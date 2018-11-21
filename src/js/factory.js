@@ -34,7 +34,7 @@ myApp.factory('SettingFactory', function($window) {
         coin: {
           name: "monoeci",
           atom: "stroop",
-          code: "XLM",
+          code: "XMCC",
           logo: "img/monoeci.png",
           bip44: 148,
         },
@@ -84,7 +84,7 @@ myApp.factory('SettingFactory', function($window) {
     },
 
     setNetworkType : function(network) {
-      return $window.localStorage[`network_type`] = network in this.NETWORKS ? network : 'xlm';
+      return $window.localStorage[`network_type`] = network in this.NETWORKS ? network : 'xmcc';
     },
     getNetworkType : function() {
       return $window.localStorage[`network_type`] || this.setNetworkType();

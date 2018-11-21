@@ -37,15 +37,15 @@ myApp.controller("HomeCtrl", ['$scope', '$rootScope', 'RemoteFactory', function(
         if (asset.code == $rootScope.currentNetwork.coin.code) {
           //$scope.pie.total = asset.volume24h_XLM;
         } else {
-          if (asset.volume24h_XLM) {
-            $scope.pie.total += asset.volume24h_XLM;
+          if (asset.volume24h_XMCC) {
+            $scope.pie.total += asset.volume24h_XMCC;
             //$scope.pie.labels.push(asset.slug);
             //$scope.pie.data.push(round(asset.volume24h_XLM, 0));
             $scope.data.push({
               slug: asset.slug,
               curr: asset.code,
               domain: asset.domain,
-              volume: asset.volume24h_XLM,
+              volume: asset.volume24h_XMCC,
               pct: 0
             });
           }

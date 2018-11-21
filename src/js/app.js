@@ -298,8 +298,8 @@ myApp.run(['$rootScope', '$window', '$location', '$translate', 'AuthenticationFa
       MonoeciApi.setServer(SettingFactory.getMonoeciUrl(), SettingFactory.getNetPassphrase(), SettingFactory.getAllowHttp());
     } catch(e) {
       console.error("Cannot set server", SettingFactory.getMonoeciUrl(), SettingFactory.getNetworkType(), e);
-      console.warn("Change network back to xlm.");
-      SettingFactory.setNetworkType('xlm');
+      console.warn("Change network back to xmcc.");
+      SettingFactory.setNetworkType('xmcc');
       MonoeciApi.setServer(null);
     }
 

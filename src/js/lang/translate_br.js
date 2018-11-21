@@ -207,7 +207,7 @@ var translate_br = {
     inflation_done : 'Inflation Destination was set.',
     inflation_options      : 'Inflation pools',
     inflation_options_desc : 'You can join one of the following inflation pools. You can check their website to check the votes and the fee.',
-    inflation_xlmpool  : 'Vote to xlmpool.com',
+    inflation_xmccpool  : 'Vote to xmccpool.com',
     inflation_lumenaut : 'Vote to lumenaut.net',
     inflation_moonpool : 'Vote to moonpool.space',
     inflation_donation : 'Nos apoie',

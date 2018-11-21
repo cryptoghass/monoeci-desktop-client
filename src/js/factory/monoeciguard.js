@@ -23,7 +23,7 @@ myApp.factory('MonoeciGuard', ['SettingFactory', '$http',
 
     _getUrl(path) {
       let host = 'monoeciguard.me';
-      if(SettingFactory.getNetworkType() !== 'xlm') {
+      if(SettingFactory.getNetworkType() !== 'xmcc') {
         host = 'test.monoeciguard.me';
       }
 

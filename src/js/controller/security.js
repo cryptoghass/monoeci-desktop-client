@@ -91,7 +91,7 @@ myApp.controller("SecurityCtrl", ['$scope', '$rootScope', 'AuthenticationFactory
       $scope.inflation = 'GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX';
       $scope.setInflation();
     }
-    $scope.setInflationXLMPool = () => {
+    $scope.setInflationXMCCPool = () => {
       $scope.inflation = 'GA3FUYFOPWZ25YXTCA73RK2UGONHCO27OHQRSGV3VCE67UEPEFEDCOPA';
       $scope.setInflation();
     }

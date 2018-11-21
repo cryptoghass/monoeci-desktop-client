@@ -84,7 +84,7 @@ myApp.controller("TradeCtrl", ['$scope', '$rootScope', 'MonoeciApi', 'SettingFac
         $scope.precise = 2;
       }
 
-      if ($scope.counter_code == 'XLM') {
+      if ($scope.counter_code == 'XMCC') {
         $scope.price_precise = 3;
         $scope.value_precise = 3;
       } else if (['BTC', 'ETH'].indexOf($scope.counter_code) >= 0) {

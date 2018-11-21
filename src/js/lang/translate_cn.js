@@ -209,7 +209,7 @@ var translate_cn = {
   inflation_done : '通胀地址设置成功',
   inflation_options      : '社区通胀池',
   inflation_options_desc : '你可以加入以下通胀池来得到每周的利息，不同的池子可能会收不同的手续费。',
-  inflation_xlmpool  : '加入xlmpool通胀池',
+  inflation_xmccpool  : '加入xmccpool通胀池',
   inflation_lumenaut : '加入lumenaut通胀池',
   inflation_moonpool : '加入MoonPool通胀池',
   inflation_donation : '支持我们',
