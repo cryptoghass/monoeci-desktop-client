@@ -20,7 +20,7 @@
 
 .auth h1 {
   height: 100px;
-  background: #346aa9;
+  background: #A93434;
   text-align: center;
   font-size: 26px;
   font-weight: 300;
@@ -29,7 +29,7 @@
   margin-top: 0;
 }
 .auth.FIC h1 {
-  background: #5157D8;
+  background: #D85151;
 }
 
 .auth-form-wrapper h2 {
@@ -42,8 +42,8 @@
   margin-bottom: 30px;
   text-align: center;
   font-size: 13px;
-  background: #d1def1;
-  color: #1e3f78;
+  background: #F1D1D1;
+  color: #781D1D;
   border: 1px solid #ccccca;
   padding: 15px;
 }
@@ -100,7 +100,7 @@
   margin-left: 4px;
   width: 5px;
   height: 100%;
-  background: #f2edbf;
+  background: #F2BFBF;
 }
 
 .strength {
