@@ -41,7 +41,7 @@
 }
 
 .island .active {
-    background: #057EEF;
+    background: #FB4B4B;
     border: 1px solid #057EEF;
     color: rgba(255,255,255,1);
     box-shadow: 2px 7px 30px rgba(0,0,0,.4);
@@ -146,7 +146,7 @@ select.select option {
 }
 
 select.select option:hover {
-	background-color: #00AFEF
+	background-color: #EF0027
 }
 
 .input, select.select {
@@ -167,7 +167,7 @@ select.select option:hover {
 }
 
 .btn-group-pretty .btn.active {
-	background: #057EEF;
+	background: #EF0505;
 	border: 1px solid #057EEF;
 	color: rgba(255, 255, 255, 1);
 	box-shadow: 2px 7px 30px rgba(0, 0, 0, .4);
