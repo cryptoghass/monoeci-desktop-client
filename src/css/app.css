@@ -8,7 +8,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
-  background: linear-gradient(150deg,rgba(100,200,255,.1),rgba(255,255,0,.2)),linear-gradient(90deg,rgba(255,255,255,.2),transparent),linear-gradient(30deg,#9291e0,#96dadb);
+  background: linear-gradient(150deg,rgba(100,200,255,.1),rgba(255,0,0,0.20)),linear-gradient(90deg,rgba(255,255,255,.2),transparent),linear-gradient(30deg,#E0919C,#DB9696);
   font-family: 'Roboto';
 }
 
@@ -104,14 +104,14 @@ code {
   border-radius: 2px;
   border: 1px solid transparent;
   margin: 0 0 3px;
-  background: #d1def1;
-  border-color : #c1cee7;
+  background: #F1D1D1;
+  border-color : #E7C1C1;
 }
 .settingPage a:hover,
 .settingPage a.active {
-  color: #d1def1;;
+  color: #F1D1D1;;
   text-decoration: none;
-  background: #346aa9;
+  background: #A93434;
 }
 
 .row_bridge {
