@@ -123,7 +123,7 @@ myApp.factory('SettingFactory', function($window) {
       $window.localStorage['fed_network'] = domain;
     },
     getFedNetwork : function(url) {
-      return $window.localStorage['fed_network'] || 'fed.network';
+      return $window.localStorage['fed_network'] || 'fed.monoeci.io';
     },
     setFedRipple : function(domain) {
       $window.localStorage['fed_ripple'] = domain;
