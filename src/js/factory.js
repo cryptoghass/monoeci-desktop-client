@@ -11,7 +11,7 @@ myApp.factory('SettingFactory', function($window) {
         networkType: 'xmcc',
         networkPassphrase: "Monoeci Main Network ; Novembre 2018",
         knownHorizons: [
-          'https://api.monoeci.io/'  // First one is default.
+          'https://api.monoeci.io'  // First one is default.
         ],
         coin: {
           name: "monoeci",
@@ -29,7 +29,7 @@ myApp.factory('SettingFactory', function($window) {
         networkType: 'xmccTest',
         networkPassphrase: "Monoeci Test Network ; Novembre 2018",
         knownHorizons: [
-          'https://api-testnet.monoeci.io/',
+          'https://api-testnet.monoeci.io',
         ],
         coin: {
           name: "monoeci",
