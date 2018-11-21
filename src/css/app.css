@@ -7,9 +7,10 @@ html {
 }
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
-  background: linear-gradient(150deg,rgba(100,200,255,.1),rgba(255,0,0,0.20)),linear-gradient(90deg,rgba(255,255,255,.2),transparent),linear-gradient(30deg,#E0919C,#DB9696);
+  margin-bottom: 40px;
+  background: #090728 !important;
   font-family: 'Roboto';
+  color: #96A2B4;
 }
 
 .worldimg {
@@ -24,8 +25,8 @@ body {
 	margin-bottom: 0;
 }
 .header .subnav {
-  background-color: #f3f3f3;
-  border-bottom: 1px solid #ccccca;
+  background-color: #383f4B;
+  border-bottom: 1px solid #383f4B;
 }
 
 .header .subnav ul {
@@ -60,12 +61,13 @@ body {
 }
 
 .footer {
+  border-top: 1px solid #e5063e
   position: absolute;
   bottom: 0;
-  width: 100%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
+  height: 40px;
 }
 
 .footer a {
@@ -104,14 +106,14 @@ code {
   border-radius: 2px;
   border: 1px solid transparent;
   margin: 0 0 3px;
-  background: #F1D1D1;
-  border-color : #E7C1C1;
+  background: #d1def1;
+  border-color : #c1cee7;
 }
 .settingPage a:hover,
 .settingPage a.active {
-  color: #F1D1D1;;
+  color: #d1def1;;
   text-decoration: none;
-  background: #A93434;
+  background: #346aa9;
 }
 
 .row_bridge {
@@ -133,6 +135,8 @@ code {
 .nowrap {
 	white-space:nowrap;
 }
+
+
 
 /*--------------------------------------------------
 .currency-summary {
