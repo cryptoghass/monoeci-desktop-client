@@ -36,7 +36,7 @@ myApp.controller("BridgesCtrl", ['$scope', '$rootScope', 'SettingFactory', 'Anch
     $scope.resolve = function(){
       $scope.fed_url = "";
       $scope.fed = undefined;
-      StellarSdk.MonoeciTomlResolver.resolve($scope.anchor_name).then(function(monoeciToml) {
+      StellarSdk.StellarTomlResolver.resolve($scope.anchor_name).then(function(monoeciToml) {
         console.debug(monoeciToml);
         var currencies = monoeciToml.CURRENCIES;
         var deposit_api = monoeciToml.DEPOSIT_SERVER;

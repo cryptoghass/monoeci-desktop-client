@@ -148,7 +148,7 @@ myApp.controller("SendCtrl", ['$scope', '$rootScope', '$routeParams', 'MonoeciAp
       $scope.target_domain = domain;
       $scope.act_loading = true;
 
-      StellarSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+      StellarSdk.StellarTomlResolver.resolve(domain).then(function(monoeciToml) {
         $scope.fed_url = monoeciToml.FEDERATION_SERVER;
         var server = new StellarSdk.FederationServer(monoeciToml.FEDERATION_SERVER, domain, {});
         server.resolveAddress(prestr).then(function(data){

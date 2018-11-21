@@ -350,7 +350,7 @@ myApp.factory('AnchorFactory', ['$rootScope', 'MonoeciApi',
 
       console.debug('Parse monoeci.toml of ' + domain);
       self.anchor[domain].parsing = true;
-      StellarSdk.MonoeciTomlResolver.resolve(domain).then(function(monoeciToml) {
+      StellarSdk.StellarTomlResolver.resolve(domain).then(function(monoeciToml) {
         console.debug(domain, monoeciToml);
         self.anchor[domain].parsing = false;
         self.anchor[domain].parsed = true;

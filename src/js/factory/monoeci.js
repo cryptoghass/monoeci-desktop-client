@@ -171,7 +171,7 @@ myApp.factory('MonoeciApi', ['$rootScope', 'MonoeciHistory', 'MonoeciOrderbook',
       },
 
       federation(fed_url) {
-        return StellarSdk.MonoeciTomlResolver.resolve(fed_url);
+        return StellarSdk.StellarTomlResolver.resolve(fed_url);
       },
 
       setServer(url, passphrase, allowHttp=false) {
