@@ -7,7 +7,7 @@ myApp.config(function($routeProvider, $httpProvider, $translateProvider, $compil
   $translateProvider.translations('en', translate_en);
   $translateProvider.translations('fr', translate_fr);
   $translateProvider.translations('br', translate_br);
-  $translateProvider.preferredLanguage('cn');
+  $translateProvider.preferredLanguage('en');
   $translateProvider.useSanitizeValueStrategy('escape');
 
   $compileProvider.imgSrcSanitizationWhitelist(/^\s*(local|http|https|app|tel|ftp|file|blob|content|ms-appx|x-wmapp0|cdvfile|chrome-extension):|data:image\//);
