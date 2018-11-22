@@ -36,6 +36,7 @@ myApp.factory('MonoeciHistory', ['SettingFactory',
               t.counterparty = t.isInbound ? r.from : r.to;
               t.asset = r.asset_type == "native" ? {code: SettingFactory.getCoin()} : {code:r.asset_code, issuer: r.asset_issuer};
               t.amount = parseFloat(r.amount);
+              t.isMainnet = _server == 'https://api.monoeci.io';
               break;
             }
             case 'create_account': {
