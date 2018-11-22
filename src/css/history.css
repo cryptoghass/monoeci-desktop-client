@@ -29,11 +29,9 @@
 }
 
 .HistoryTable-row .amount .credit {
-	color: #0c0dff;
 }
 
 .HistoryTable-row .amount .debit {
-	color: #e34949;
 }
 
 .HistoryTable-row .address {
@@ -61,15 +59,12 @@
 	display: table;
 	position: relative;
 	height: 80px;
-	border-top: 1px solid #E5E5E5;
 	padding: 0 16px;
 	overflow: hidden;
-	background-color: white;
 }
 
 .feed-item-comment {
 	display: table-cell;
-	color:#444;
 	padding-left:16px;
 	vertical-align: middle;
 }

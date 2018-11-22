@@ -35,6 +35,7 @@
 	padding: 11px 18px 9px 18px;
 	font-size: 21px;
 	color: #fff;
+	border-bottom: 1px solid #dedfe0;
 }
 
 .island__separator {
