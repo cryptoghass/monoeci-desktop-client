@@ -21,6 +21,18 @@ body {
 .header {
 	margin-bottom: 20px;
 }
+
+.navbar-inverse {
+	background: #090728;
+	border-bottom: 1px solid #E5063E
+}
+
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.active>a:focus,
+.navbar-inverse .navbar-nav>.active>a:active{
+	background: #E5063E;
+}
+
 .header nav {
 	margin-bottom: 0;
 }
@@ -50,18 +62,27 @@ body {
 
 .header .subnav ul > li a:hover,
 .header .subnav ul > li a:focus {
-  color: #1f1f1e;
+  color: #fff;
   text-decoration: none;
   border-bottom: 2px solid #ccccca;
 }
 
 .header .subnav ul > li.active a {
   font-family: 'Roboto';
-  border-bottom: 2px solid #888888;
+  border-bottom: 2px solid #E5063E;
+}
+
+.btn-sm{
+	float: right;
+}
+
+.btn-info{
+	border-color: #E5063E;
+	background-color: #E5063E;
 }
 
 .footer {
-  border-top: 1px solid #e5063e
+  border-top: 1px solid #e5063e;
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -106,14 +127,14 @@ code {
   border-radius: 2px;
   border: 1px solid transparent;
   margin: 0 0 3px;
-  background: #d1def1;
-  border-color : #c1cee7;
+  background: #383f4B;
+  color: #96A2B4;
 }
 .settingPage a:hover,
 .settingPage a.active {
-  color: #d1def1;;
+  color: #fff;
   text-decoration: none;
-  background: #346aa9;
+  background: #E5063E;
 }
 
 .row_bridge {

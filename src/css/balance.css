@@ -2,6 +2,8 @@
 	margin: 0 auto;
 	margin-bottom: 18px;
 	background: #383f4B;
+	border-radius: 2px;
+    border: 1px solid transparent;
 }
 
 .islandBack {
@@ -32,6 +34,7 @@
 .island__header {
 	padding: 11px 18px 9px 18px;
 	font-size: 21px;
+	color: #fff;
 }
 
 .island__separator {
